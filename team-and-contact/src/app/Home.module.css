@@ -1,0 +1,63 @@
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #ebf8ff, #f3f4f6);
+}
+
+.icon {
+    width: 4rem;
+    height: 4rem;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 .5rem;
+    color: #1f2937;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn,
+.btnOutline {
+    padding: .75rem 1.5rem;
+    border-radius: .5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+}
+
+.btn {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+.btnOutline {
+    border: 2px solid #3b82f6;
+    color: #3b82f6;
+}
+
+.btnOutline:hover {
+    background: #3b82f6;
+    color: #fff;
+}
