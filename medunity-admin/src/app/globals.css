@@ -1,0 +1,19 @@
+/* keep everything that Next gave you */
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f9fafb;
+}
+
+
+/* simple scrollbar */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #34d399;
+    border-radius: 3px;
+}

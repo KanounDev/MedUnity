@@ -1,0 +1,33 @@
+.header {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+    margin-bottom: 2rem;
+}
+
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+    color: #10b981;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1f2937;
+}
+
+.subtitle {
+    margin-left: auto;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
