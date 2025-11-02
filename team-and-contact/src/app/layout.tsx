@@ -1,6 +1,6 @@
+// src/app/layout.tsx
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import ToastProvider from '@/components/ToastProvider';
+import ClientLayout from './ClientLayout';
 
 export const metadata = {
   title: 'MedUnity – Our Team & Contact',
@@ -15,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ToastProvider />
-        <Navbar />
-        <main>{children}</main>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

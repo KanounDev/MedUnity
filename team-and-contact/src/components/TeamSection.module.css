@@ -64,3 +64,44 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 2rem;
 }
+
+.loader {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+.spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    text-align: center;
+    padding: 2rem;
+    color: #ef4444;
+}
+
+.errorMsg {
+    font-size: .875rem;
+    color: #6b7280;
+    margin-top: .5rem;
+}
+
+.empty {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+    font-style: italic;
+}
