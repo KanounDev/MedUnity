@@ -9,6 +9,7 @@ import DoctorModal from './DoctorModal';
 import { Doctor } from '@/types';
 import styles from './TeamSection.module.css';
 
+
 const fetchDoctors = async (): Promise<Doctor[]> => {
   const { data } = await axios.get('http://localhost:3002/doctors');
   return data;

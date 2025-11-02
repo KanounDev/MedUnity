@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DoctorsModule } from './doctors/doctors.module'; // ← ADD THIS
+import { DoctorsModule } from './doctors/doctors.module';
+import { ActivitiesModule } from './activities/activities.module'; // Added
+import { NewsModule } from './news/news.module';                   // Added
 
 @Module({
   imports: [
@@ -16,11 +18,13 @@ import { DoctorsModule } from './doctors/doctors.module'; // ← ADD THIS
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: true, // Warning: dev only!
       }),
       inject: [ConfigService],
     }),
-    DoctorsModule, // ← ADD THIS LINE
+    DoctorsModule,
+    ActivitiesModule,
+    NewsModule,
   ],
 })
 export class AppModule {}

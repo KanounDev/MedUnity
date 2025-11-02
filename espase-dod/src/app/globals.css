@@ -1,0 +1,147 @@
+/* Réinitialisation */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+}
+
+/* Disposition principale */
+.page-container {
+  display: flex;
+}
+/* Conteneur principal de la page */ 
+.container { display: flex;
+   flex-direction: column;
+   /* Les éléments (header et main) seront organisés verticalement */ 
+   min-height: 100vh; 
+   /* La page prendra toute la hauteur de l'écran */
+   background-color: #fff; margin-top: 50px;
+   /* Pour que le contenu ne se cache pas derrière la barre */ } 
+/* En-tête de la page */ 
+.header { background-color: #a1d6e6;
+   /* Couleur d'arrière-plan pour l'en-tête */ 
+   padding: 20px; text-align: center;
+   color: white;
+   margin-top: -45px;
+  
+   /* Couleur du texte */ 
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   /* Ombre légère pour l'en-tête */ }
+ /* Titre de l'en-tête */ 
+ .header h1 { font-size: 1.5rem;
+   font-weight: bold; 
+   margin: 0; }
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+}
+
+.patient-item {
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.patient-item:hover {
+  background-color: #ececec;
+}
+
+/* Zone des examens */
+.exam-info {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.exam-info h2 {
+  margin-bottom: 20px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Statuts colorés */
+.status.ready {
+  color: green;
+}
+
+.status.in-progress {
+  color: orange;
+}
+
+.status.pending {
+  color: red;
+}
+
+/* ✅ Boutons de téléchargement */
+.download-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+}
+
+.download-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f4f8;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 40px;
+}
+
+
+
+
+

@@ -1,75 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Section from '@/components/Section';
 import DoctorCard from '@/components/DoctorCard';
 import ActivityCard from '@/components/ActivityCard';
 import NewsCard from '@/components/NewsCard';
 import AddEditModal from '@/components/AddEditModal';
 import { Doctor, Activity, News } from '@/types';
-import { v4 as uuidv4 } from 'uuid';
+import { notify } from '@/components/ToastProvider';
 
-// ---------- Mock data (replace later with API) ----------
-const mockDoctors: Doctor[] = [
-  {
-    id: '1',
-    name: 'Dr. Jean Dupont',
-    specialty: 'Dermato-Pathologie et Médecine Légale',
-    degrees: [
-      'Ancien Interne et Assistant des Hôpitaux de Paris',
-      'D.E.S. d’Anatomie-Pathologique',
-      'D.E.S.C. de Dermato-Pathologie',
-    ],
-    photo: '/doctor1.jpg',
-  },
-  {
-    id: '2',
-    name: 'Dr. Marie Curie',
-    specialty: 'Dermato-Pathologie et Médecine Légale',
-    degrees: ['D.E.S. d’Anatomie-Pathologique', 'D.E.S.C. de Dermato-Pathologie'],
-    photo: '/doctor2.jpg',
-  },
-];
-
-const mockActivities: Activity[] = [
-  {
-    id: 'a1',
-    title: 'CYTOLOGIE – Le prélèvement',
-    description:
-      'Le prélèvement est réalisé au cabinet du médecin ou au laboratoire. Il consiste à prélever des cellules...',
-    image: '/cyto1.jpg',
-  },
-  {
-    id: 'a2',
-    title: 'CYTOLOGIE – Le diagnostic',
-    description:
-      'Le diagnostic repose sur l’examen microscopique des cellules obtenues...',
-    image: '/cyto2.jpg',
-  },
-];
-
-const mockNews: News[] = [
-  {
-    id: 'n1',
-    title: 'Changement d’horaires',
-    date: 'Novembre 2025',
-    content:
-      'À partir du 1er novembre, le laboratoire sera ouvert de 8h à 18h...',
-    image: '/news1.jpg',
-  },
-  {
-    id: 'n2',
-    title: 'Meet-up',
-    date: 'Novembre 2025',
-    content: 'Rencontre avec les équipes le 12 novembre...',
-    image: '/meetup.jpg',
-  },
-];
+const API_BASE = '/api'; // Proxied to NestJS
 
 export default function AdminPage() {
   // ---------- State ----------
-  const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors);
-  const [activities, setActivities] = useState<Activity[]>(mockActivities);
-  const [news, setNews] = useState<News[]>(mockNews);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [news, setNews] = useState<News[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [modal, setModal] = useState<{
     open: boolean;
@@ -77,40 +24,179 @@ export default function AdminPage() {
     edit?: Doctor | Activity | News;
   }>({ open: false, type: 'doctor' });
 
+  // ---------- Fetch All Data ----------
+  const fetchAll = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const [docRes, actRes, newsRes] = await Promise.all([
+        fetch(`${API_BASE}/doctors`),
+        fetch(`${API_BASE}/activities`),
+        fetch(`${API_BASE}/news`),
+      ]);
+
+      if (!docRes.ok || !actRes.ok || !newsRes.ok) throw new Error('Failed to fetch');
+
+      const [docData, actData, newsData] = await Promise.all([
+        docRes.json(),
+        actRes.json(),
+        newsRes.json(),
+      ]);
+
+      setDoctors(docData);
+      setActivities(actData);
+      setNews(newsData);
+    } catch (err) {
+      setError('Failed to load data. Please try again.');
+      notify('Error loading data', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAll();
+  }, []);
+
   // ---------- Helpers ----------
   const openAdd = (type: typeof modal.type) => setModal({ open: true, type });
   const openEdit = (type: typeof modal.type, item: any) =>
     setModal({ open: true, type, edit: item });
   const closeModal = () => setModal({ open: false, type: 'doctor' });
 
-  const saveDoctor = (data: Doctor) => {
-    if (data.id) {
-      setDoctors((p) => p.map((d) => (d.id === data.id ? data : d)));
-    } else {
-      setDoctors((p) => [...p, { ...data, id: uuidv4() }]);
-    }
-  };
-  const deleteDoctor = (id: string) => setDoctors((p) => p.filter((d) => d.id !== id));
+  // ---------- CRUD Operations ----------
+  const saveDoctor = async (data: Doctor) => {
+    const isEdit = !!data.id;
+    const method = isEdit ? 'PATCH' : 'POST';
+    const url = isEdit ? `${API_BASE}/doctors/${data.id}` : `${API_BASE}/doctors`;
 
-  const saveActivity = (data: Activity) => {
-    if (data.id) {
-      setActivities((p) => p.map((a) => (a.id === data.id ? data : a)));
-    } else {
-      setActivities((p) => [...p, { ...data, id: uuidv4() }]);
-    }
-  };
-  const deleteActivity = (id: string) => setActivities((p) => p.filter((a) => a.id !== id));
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-  const saveNews = (data: News) => {
-    if (data.id) {
-      setNews((p) => p.map((n) => (n.id === data.id ? data : n)));
-    } else {
-      setNews((p) => [...p, { ...data, id: uuidv4() }]);
+      if (!res.ok) throw new Error();
+
+      const updated = await res.json();
+      setDoctors((p) =>
+        isEdit ? p.map((d) => (d.id === updated.id ? updated : d)) : [...p, updated]
+      );
+      notify(isEdit ? 'Doctor updated' : 'Doctor added', 'success');
+      closeModal();
+    } catch {
+      notify('Failed to save doctor', 'error');
     }
   };
-  const deleteNews = (id: string) => setNews((p) => p.filter((n) => n.id !== id));
+
+  const deleteDoctor = async (id: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/doctors/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error();
+      setDoctors((p) => p.filter((d) => d.id !== id));
+      notify('Doctor deleted', 'success');
+    } catch {
+      notify('Failed to delete', 'error');
+    }
+  };
+
+  const saveActivity = async (data: Activity) => {
+    const isEdit = !!data.id;
+    const method = isEdit ? 'PATCH' : 'POST';
+    const url = isEdit ? `${API_BASE}/activities/${data.id}` : `${API_BASE}/activities`;
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error();
+
+      const updated = await res.json();
+      setActivities((p) =>
+        isEdit ? p.map((a) => (a.id === updated.id ? updated : a)) : [...p, updated]
+      );
+      notify(isEdit ? 'Activity updated' : 'Activity added', 'success');
+      closeModal();
+    } catch {
+      notify('Failed to save activity', 'error');
+    }
+  };
+
+  const deleteActivity = async (id: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/activities/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error();
+      setActivities((p) => p.filter((a) => a.id !== id));
+      notify('Activity deleted', 'success');
+    } catch {
+      notify('Failed to delete', 'error');
+    }
+  };
+
+  const saveNews = async (data: News) => {
+    const isEdit = !!data.id;
+    const method = isEdit ? 'PATCH' : 'POST';
+    const url = isEdit ? `${API_BASE}/news/${data.id}` : `${API_BASE}/news`;
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error();
+
+      const updated = await res.json();
+      setNews((p) =>
+        isEdit ? p.map((n) => (n.id === updated.id ? updated : n)) : [...p, updated]
+      );
+      notify(isEdit ? 'News updated' : 'News added', 'success');
+      closeModal();
+    } catch {
+      notify('Failed to save news', 'error');
+    }
+  };
+
+  const deleteNews = async (id: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/news/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error();
+      setNews((p) => p.filter((n) => n.id !== id));
+      notify('News deleted', 'success');
+    } catch {
+      notify('Failed to delete', 'error');
+    }
+  };
 
   // ---------- Render ----------
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-lg">Loading data...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 gap-4">
+        <p className="text-red-500">{error}</p>
+        <button
+          onClick={fetchAll}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* DOCTORS */}
