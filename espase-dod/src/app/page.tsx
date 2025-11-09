@@ -1,9 +1,9 @@
 // page.tsx
 "use client";
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import ExamTable from "./components/ExamTable";
-import { patients, exams } from "./components/types";
+import Sidebar from "@/components/Sidebar";
+import ExamTable from "@/components/ExamTable";
+import { patients, exams } from "@/components/types";
 import styles from "./page.module.css"; // Import new CSS
 
 export default function Home() {
