@@ -11,27 +11,19 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className={styles.nav}>
-      <div className={styles.inner}>
-        <Link href="/" className={styles.logo}>
-          <HeartIcon className={styles.icon} />
-          <span className={styles.name}>MedUnity</span>
-        </Link>
-        <div className={styles.links}>
-          <Link
-            href="/team"
-            className={isActive('/team') ? styles.active : styles.link}
-          >
-            Our Team
-          </Link>
-          <Link
-            href="/contact"
-            className={isActive('/contact') ? styles.active : styles.link}
-          >
-            Contact Us
-          </Link>
-        </div>
+    <header className={styles.navbar}>
+      <div className={styles.logo}>
+        <img src="/logo4.png" alt="MedUnity logo" />
+        <span>MedUnity</span>
       </div>
-    </nav>
+      <nav className={styles.navLinks}>
+        <Link href="/Home" className={isActive('/Home') ? styles.active : styles.link}>Home</Link>
+        <Link href="/" className={isActive('/') ? styles.active : styles.link}>Our Activities</Link>
+        <Link href="/news" className={isActive('/news') ? styles.active : styles.link}>News</Link>
+        <Link href="/team" className={isActive('/stuff') ? styles.active : styles.link}>Our Stuff</Link>
+        <Link href="/contact" className={isActive('/contact') ? styles.active : styles.link}>Contact</Link>
+        <Link href="/qr" className={isActive('/qr') ? styles.active : styles.link}>Q/R</Link>
+      </nav>
+    </header>
   );
 }

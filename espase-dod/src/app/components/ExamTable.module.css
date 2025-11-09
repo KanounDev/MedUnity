@@ -1,0 +1,63 @@
+.exam-info {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.exam-info h2 {
+    margin-bottom: 20px;
+}
+
+.examTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.examTable th,
+.examTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.examTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.status.ready {
+    color: green;
+}
+
+.status.in-progress {
+    color: orange;
+}
+
+.status.pending {
+    color: red;
+}
+
+.download-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background-color: #45a049;
+}
+
+.download-btn.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}

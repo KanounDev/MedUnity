@@ -5,8 +5,10 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <HeartIcon className={styles.icon} />
-        <h1 className={styles.title}>MedUnity</h1>
+        <div className="logo" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <img src="/logo4.png" alt="MedUnity logo" height="40px"/>
+          <span>MedUnity</span>
+        </div>
         <span className={styles.subtitle}>Admin Page</span>
       </div>
     </header>
