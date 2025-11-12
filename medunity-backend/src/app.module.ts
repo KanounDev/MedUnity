@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DoctorsModule } from './doctors/doctors.module';
-import { ActivitiesModule } from './activities/activities.module'; // Added
-import { NewsModule } from './news/news.module';                   // Added
+import { ActivitiesModule } from './activities/activities.module';
+import { NewsModule } from './news/news.module';
+import { GeminiModule } from './gemini/gemini.module'; // 👈 NEW: Import the Gemini Module
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { NewsModule } from './news/news.module';                   // Added
     DoctorsModule,
     ActivitiesModule,
     NewsModule,
+    GeminiModule, // 👈 NEW: Add the Gemini Module to the imports array
   ],
 })
 export class AppModule {}
