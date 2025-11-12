@@ -3,8 +3,19 @@ import { useState } from 'react';
 import { notify } from './ToastProvider';
 import styles from './ContactSection.module.css';
 
+// Define the shape of the form data
+interface ContactForm {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002';
+
 export default function ContactSection() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ContactForm>({
     name: '',
     email: '',
     phone: '',
@@ -12,17 +23,37 @@ export default function ContactSection() {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate send
-    notify('Message sent! We’ll reply soon.', 'success');
-    setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message.');
+      }
+
+      notify('Message sent! We’ll reply soon.', 'success');
+      // Clear the form on success
+      setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Submission error:', error);
+      notify('An error occurred. Please try again later.', 'error');
+    }
   };
 
+  // ... rest of the component remains the same (inputs, textarea, button)
   return (
     <section id="contact" className={styles.section}>
       <h2 className={styles.title}>Contact Us</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
+        {/* All input/textarea elements here, use form state as before */}
         <input
           placeholder="Full Name"
           value={form.name}

@@ -20,3 +20,9 @@ export type News = {
   content: string;
   image?: string;
 };
+
+export enum MessageStatus {
+  UNREAD = 'UNREAD',
+  READ = 'READ',
+  ARCHIVED = 'ARCHIVED',
+}

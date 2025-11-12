@@ -5,7 +5,7 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { NewsModule } from './news/news.module';
 import { GeminiModule } from './gemini/gemini.module'; // 👈 NEW: Import the Gemini Module
-
+import { ContactModule } from './contact/contact.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -19,14 +19,15 @@ import { GeminiModule } from './gemini/gemini.module'; // 👈 NEW: Import the G
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true, // Warning: dev only!
+        synchronize: false, // Warning: dev only!
       }),
       inject: [ConfigService],
     }),
     DoctorsModule,
     ActivitiesModule,
     NewsModule,
-    GeminiModule, // 👈 NEW: Add the Gemini Module to the imports array
-  ],
+    GeminiModule, 
+    ContactModule,
+   ],
 })
 export class AppModule {}
