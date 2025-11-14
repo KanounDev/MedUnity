@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DoctorsModule } from './doctors/doctors.module';
-import { ActivitiesModule } from './activities/activities.module';
-import { NewsModule } from './news/news.module';
 import { GeminiModule } from './gemini/gemini.module'; // 👈 NEW: Import the Gemini Module
 import { ContactModule } from './contact/contact.module';
 @Module({
