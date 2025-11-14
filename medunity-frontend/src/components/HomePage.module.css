@@ -1,0 +1,235 @@
+/* components/HomePage.module.css */
+
+.container {
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* Main Grid Layout - unchanged structure */
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 2rem;
+    padding: 2rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* ─────── LEFT SIDEBAR ─────── */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.titleh {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #75bcff;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.8rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.map {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.button {
+    background: #00bfa5;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.button:hover {
+    background: #009f8a;
+    transform: translateY(-2px);
+}
+
+
+/* ─────── CENTER ─────── */
+
+.center {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+}
+
+.banner {
+    background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/laboratory.jpeg") center/cover no-repeat;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    text-align: center;
+}
+
+.bannerText h2 {
+    font-size: 2.4rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+}
+
+.bannerText h3 {
+    font-size: 1.8rem;
+    color: #003366;
+    margin: 0;
+}
+
+.bannerText span {
+    color: #00bfa5;
+    font-weight: 800;
+}
+
+
+/* Patient & Doctor Spaces */
+
+.spaces {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.spaceCard {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.spaceCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.smallBtn {
+    background: #003366;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.smallBtn:hover {
+    background: #00bfa5;
+    transform: translateY(-2px);
+}
+
+
+/* ─────── RIGHT NEWS SECTION ─────── */
+
+.news {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+}
+
+.newsCard {
+    text-align: center;
+}
+
+.newsImage {
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.4s ease;
+}
+
+.newsImage:hover {
+    transform: scale(1.04);
+}
+
+.newsCard p {
+    color: #444;
+    line-height: 1.7;
+    margin: 1rem 0;
+}
+
+.readMore {
+    background: #00bfa5;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.readMore:hover {
+    background: #009f8a;
+    transform: translateY(-3px);
+}
+
+
+/* Animated divider — same as Activities & News */
+
+.divider {
+    width: 300px;
+    height: 3px;
+    background-color: #00bfa5;
+    margin: 2rem auto;
+    border-radius: 3px;
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.25);
+    }
+}
+
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+    .main {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+    }
+    .spaces {
+        gap: 2rem;
+    }
+}

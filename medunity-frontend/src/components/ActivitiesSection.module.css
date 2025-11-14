@@ -1,0 +1,129 @@
+/* components/ActivitiesSection.module.css */
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    text-align: center;
+    background-color: transparent;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #75bcff;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ──────── CARD ──────── */
+
+.activityCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 3rem;
+    overflow: visible !important;
+    /* ← crucial fix */
+}
+
+.activityCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ──────── IMAGE WRAPPER ──────── */
+
+.imageWrapper {
+    margin-bottom: 1.5rem;
+    border-radius: 50%;
+    /* ← circular images like your screenshot */
+    overflow: hidden;
+    width: 260px;
+    /* ← fixed size so the circle is perfect */
+    height: 260px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    transition: transform 0.4s ease;
+}
+
+.imageWrapper:hover {
+    transform: scale(1.05);
+}
+
+
+/* Make sure Next/Image fills the circle correctly */
+
+.imageWrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    /* ← this prevents stretching/distortion */
+}
+
+
+/* ──────── TEXT ──────── */
+
+.text h3 {
+    font-size: 1.6rem;
+    color: #003366;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+
+/* Desktop layout (side-by-side) */
+
+@media (min-width: 768px) {
+    .activityCard {
+        flex-direction: row;
+        text-align: left;
+        gap: 3rem;
+        align-items: center;
+    }
+    .imageWrapper {
+        margin-bottom: 0;
+    }
+    .text {
+        flex: 1;
+    }
+}
+
+
+/* Divider stays exactly the same as NewsSection */
+
+.divider {
+    width: 400px;
+    height: 3px;
+    background-color: #00bfa5;
+    margin: 40px auto;
+    border-radius: 3px;
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.2);
+    }
+}
