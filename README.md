@@ -58,7 +58,7 @@ pour la gestion des dossiers médicaux et la communication entre médecins et pa
  # Installation et Démarrage
   Frontend (Next.js)
   Création du projet
-   npx create-next-app@latest medunity-admin --typescript
+   npx create-next-app@latest medunity-frontend --typescript
   Accéder au dossier du projet
    cd medunity-frontend
   Installation des dépendances
