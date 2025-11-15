@@ -1,91 +1,133 @@
-# MedUnity - Application Web Médicale
-Application web de présentation et gestion d'un cabinet médical permettant aux patients de consulter leurs examens médicaux, 
-aux médecins de gérer les dossiers patients, et à l'administrateur de superviser l'ensemble du système.
+# 🏥 MedUnity - Application Web Médicale
 
+Application web de présentation et gestion d'un cabinet médical.
 
-# Description du Projet
-MedUnity combine une présentation institutionnelle du cabinet (accueil, services, contact) avec une interface applicative sécurisée 
-pour la gestion des dossiers médicaux et la communication entre médecins et patients.
+Elle permet :
+* Aux **patients** de consulter leurs examens médicaux.
+* Aux **médecins** de gérer les dossiers patients.
+* À l'**administrateur** de superviser l'ensemble du système.
 
-# Objectifs Principaux
-  Informer : présenter le cabinet, son équipe et ses spécialités
-  Digitaliser : offrir aux patients un espace personnel pour consulter leurs résultats et rendez-vous
-  Collaborer : permettre aux médecins de partager les comptes rendus et analyses
-  Sécuriser : garantir la confidentialité des données médicales
-  Moderniser : proposer une interface simple et accessible sur tous les appareils
+---
 
-# Public Cible
- Patients : Accéder à leurs résultats, prendre contact, comprendre les services
- Médecins : Gérer les dossiers médicaux, échanger des informations, accéder aux rapports
- Personnel administratif : Gérer les rendez-vous, dossiers et actualités du site
- Visiteurs : Découvrir le cabinet, ses médecins, ses prestations
+## 📝 Description du Projet
 
-# Fonctionnalités
-  Côté Public
-  Page d'accueil avec présentation générale et actualités récentes
-  Page "À propos" avec historique, équipe médicale et galerie photo
-  Page des services avec liste des spécialités et tarifs
-  Page de contact avec formulaire 
-  Q/R avec informations médicales et conseils de santé
+MedUnity combine une **présentation institutionnelle** du cabinet (accueil, services, contact) avec une **interface applicative sécurisée** pour la gestion des dossiers médicaux et la communication entre médecins et patients.
 
-  Côté Patient
-  Authentification personnelle sécurisée
-  Accès à l'historique des consultations
-  Consultation des examens médicaux (état : traité / en cours)
-  Téléchargement des résultats médicaux
-  
-  Côté Médecin
-  Authentification sécurisée
-  Consultation et mise à jour des dossiers patients
-  Ajout et modification d'examens médicaux
-  Téléversement et partage de rapports médicaux
-  Espace collaboratif avec d'autres médecins
+---
 
- Côté Administrateur
-  Gestion de la liste des docteurs (ajout, suppression, mise à jour)
-  Gestion des activités médicales
-  Gestion des actualités publiées sur la plateforme
-  Supervision complète du système
+## ⭐ Objectifs Principaux
 
-# Stack Technique
-  Frontend : Next.js 
-  Backend : Nest.js
-  Base de données : PostgreSQL
-  Architecture : API REST
-  Notifications : React Hot Toast
-  Styling : CSS simple
+* **Informer** : Présenter le cabinet, son équipe et ses spécialités.
+* **Digitaliser** : Offrir aux patients un espace personnel pour consulter leurs résultats et rendez-vous.
+* **Collaborer** : Permettre aux médecins de partager les comptes rendus et analyses.
+* **Sécuriser** : Garantir la confidentialité des données médicales.
+* **Moderniser** : Proposer une interface simple et accessible sur tous les appareils.
 
- # Installation et Démarrage
-  Frontend (Next.js)
-  Création du projet
-   npx create-next-app@latest medunity-frontend --typescript
-  Accéder au dossier du projet
-   cd medunity-frontend
-  Installation des dépendances
-   npm i @heroicons/react lucide-react @headlessui/react @tanstack/react-query react-hot-toast
-  Démarrer le serveur de développement
-   npm run dev
+---
 
-  Backend (Nest.js)
-   Accéder au dossier backend
+## 🎯 Public Cible
+
+| Utilisateur | Description des Accès / Besoins |
+| :--- | :--- |
+| **Patients** | Accéder à leurs résultats, prendre contact, comprendre les services. |
+| **Médecins** | Gérer les dossiers médicaux, échanger des informations, accéder aux rapports. |
+| **Personnel administratif** | Gérer les rendez-vous, dossiers et actualités du site. |
+| **Visiteurs** | Découvrir le cabinet, ses médecins, ses prestations. |
+
+---
+
+## ⚙️ Fonctionnalités
+
+### Côté Public
+* Page d'accueil avec présentation générale et actualités récentes.
+* Page "**À propos**" avec historique, équipe médicale et galerie photo.
+* Page des **services** avec liste des spécialités et tarifs.
+* Page de **contact** avec formulaire.
+* **Q/R** avec informations médicales et conseils de santé.
+
+### Côté Patient
+* **Authentification** personnelle sécurisée.
+* Accès à l'historique des consultations.
+* Consultation des **examens médicaux** (état : traité / en cours).
+* **Téléchargement** des résultats médicaux.
+
+### Côté Médecin
+* **Authentification** sécurisée.
+* Consultation et mise à jour des **dossiers patients**.
+* Ajout et modification d'examens médicaux.
+* Téléversement et partage de **rapports médicaux**.
+* **Espace collaboratif** avec d'autres médecins.
+
+### Côté Administrateur
+* **Gestion** de la liste des docteurs (ajout, suppression, mise à jour).
+* Gestion des activités médicales.
+* Gestion des actualités publiées sur la plateforme.
+* **Supervision complète** du système.
+
+---
+
+## 💻 Stack Technique
+
+| Domaine | Technologie | Note / Rôle |
+| :--- | :--- | :--- |
+| **Frontend** | Next.js | Application côté client |
+| **Backend** | Nest.js | API et logique métier |
+| **Base de données** | PostgreSQL | Stockage des données |
+| **Architecture** | API REST | Communication client/serveur |
+| **Notifications** | React Hot Toast | Affichage des messages d'alerte |
+| **Styling** | CSS simple | Styles de l'interface |
+
+---
+
+## 🚀 Installation et Démarrage
+
+### 1. Frontend (Next.js)
+
+1.  **Création du projet**
+    ```bash
+    npx create-next-app@latest medunity-frontend --typescript
+    ```
+2.  **Accéder au dossier du projet**
+    ```bash
+    cd medunity-frontend
+    ```
+3.  **Installation des dépendances**
+    ```bash
+    npm i @heroicons/react lucide-react @headlessui/react @tanstack/react-query react-hot-toast
+    ```
+4.  **Démarrer le serveur de développement**
+    ```bash
+    npm run dev
+    ```
+
+### 2. Backend (Nest.js)
+
+1.  **Accéder au dossier backend**
+    ```bash
     cd medunity-backend
-   Installation des dépendances
+    ```
+2.  **Installation des dépendances**
+    ```bash
     npm install
-   Démarrer le serveur
+    ```
+3.  **Démarrer le serveur**
+    ```bash
     npm run start:dev
-   
-# Sécurité
- Gestion des rôles : Patient / Médecin / Administrateur
- Accès restreint selon le profil utilisateur
- Protection des données médicales sensibles
- API sécurisée avec authentification JWT
+    ```
 
+---
 
-# Réalisé par :
-Mohamed Kanoun
-Morsi Feki
-Mariem Ben Attia
+## 🔒 Sécurité
 
+* **Gestion des rôles** : Patient / Médecin / Administrateur.
+* **Accès restreint** selon le profil utilisateur.
+* **Protection** des données médicales sensibles.
+* API sécurisée avec **authentification JWT**.
 
+---
 
+## 👨‍💻 Réalisé par :
 
+* Mohamed Kanoun
+* Morsi Feki
+* Mariem Ben Attia
