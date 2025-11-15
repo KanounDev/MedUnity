@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Lilita One";
+  src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .section {
     padding: 4rem 1rem;
     max-width: 600px;
@@ -6,9 +13,13 @@
 }
 
 .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #75bcff;
+    font-family: "Lilita One", cursive;
+    font-size: 2.5rem;
+    font-weight: 70;
+    color: #003366;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: #ffffff 2px 2px 12px;
 }
 
 .form {
@@ -38,7 +49,7 @@
 
 .submit {
     padding: .75rem 1.5rem;
-    background: #3b82f6;
+    background: #003366;
     color: #fff;
     border: none;
     border-radius: .5rem;
@@ -49,5 +60,5 @@
 }
 
 .submit:hover {
-    background: #2563eb;
+    background: #011c38;
 }

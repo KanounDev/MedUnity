@@ -35,7 +35,7 @@ export default function HomePage() {
         <div className={styles.center}>
           <div className={styles.banner}>
             <div className={styles.bannerText}>
-              <h2>Welcome</h2>
+              <h2>Welcome...</h2>
               <h3>Institut of Pathology <br /><span>MedUnity</span></h3>
             </div>
           </div>
