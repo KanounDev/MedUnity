@@ -1,4 +1,4 @@
-# 🏥 MedUnity - Application Web Médicale
+#  MedUnity - Application Web Médicale
 
 Application web de présentation et gestion d'un cabinet médical.
 
@@ -9,13 +9,13 @@ Elle permet :
 
 ---
 
-## 📝 Description du Projet
+##  Description du Projet
 
 MedUnity combine une **présentation institutionnelle** du cabinet (accueil, services, contact) avec une **interface applicative sécurisée** pour la gestion des dossiers médicaux et la communication entre médecins et patients.
 
 ---
 
-## ⭐ Objectifs Principaux
+##  Objectifs Principaux
 
 * **Informer** : Présenter le cabinet, son équipe et ses spécialités.
 * **Digitaliser** : Offrir aux patients un espace personnel pour consulter leurs résultats et rendez-vous.
@@ -25,7 +25,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ---
 
-## 🎯 Public Cible
+##  Public Cible
 
 | Utilisateur | Description des Accès / Besoins |
 | :--- | :--- |
@@ -36,7 +36,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ---
 
-## ⚙️ Fonctionnalités
+##  Fonctionnalités
 
 ### Côté Public
 * Page d'accueil avec présentation générale et actualités récentes.
@@ -66,7 +66,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ---
 
-## 💻 Stack Technique
+##  Stack Technique
 
 | Domaine | Technologie | Note / Rôle |
 | :--- | :--- | :--- |
@@ -79,7 +79,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ---
 
-## 🚀 Installation et Démarrage
+##  Installation et Démarrage
 
 ### 1. Frontend (Next.js)
 
@@ -117,7 +117,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ---
 
-## 🔒 Sécurité
+##  Sécurité
 
 * **Gestion des rôles** : Patient / Médecin / Administrateur.
 * **Accès restreint** selon le profil utilisateur.
