@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <header className={styles.navbar}>
       <div className={styles.logo}>
-        <img src="/logo4.png" alt="MedUnity logo" />
+        <img src="/medunity.png" alt="MedUnity logo" />
         <span>MedUnity</span>
       </div>
       <nav className={styles.navLinks}>

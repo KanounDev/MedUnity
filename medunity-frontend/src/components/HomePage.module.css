@@ -1,5 +1,18 @@
 /* components/HomePage.module.css */
-
+@font-face {
+  font-family: "Lilita One";
+  src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LindenHill";
+  src: url("/fonts/LindenHill-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .container {
     font-family: "Poppins", sans-serif;
 }
@@ -12,7 +25,6 @@
     grid-template-columns: 1fr 2fr 1fr;
     gap: 2rem;
     padding: 2rem 3rem;
-    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -22,24 +34,26 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
 }
 
 .titleh {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #75bcff;
+    font-family: "Lilita One", cursive;
+    font-size: 2.5rem;
+    font-weight: 70;
+    color: #003366;
     text-align: center;
     margin-bottom: 0.5rem;
+    text-shadow: #ffffff 2px 2px 12px;
 }
 
 .card {
     background: white;
     border-radius: 20px;
-    padding: 1.8rem;
+    padding: 2rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    transition: transform 0.3s ease;
+    height: fit-content;
+    transition: all 0.3s ease;
+    margin-bottom: 10%;
 }
 
 .card:hover {
@@ -50,6 +64,8 @@
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
 }
 
 .button {
@@ -57,7 +73,7 @@
     color: white;
     border: none;
     padding: 0.7rem 1.5rem;
-    border-radius: 12px;
+    border-radius: 12rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -81,28 +97,31 @@
 
 .banner {
     background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/laboratory.jpeg") center/cover no-repeat;
-    border-radius: 24px;
+    border-radius: 1rem;
     padding: 3rem 2.5rem;
     width: 100%;
-    max-width: 600px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(1rem);
     text-align: center;
 }
 
 .bannerText h2 {
+    font-family: "LindenHill", cursive;
     font-size: 2.4rem;
     color: #003366;
     margin-bottom: 0.5rem;
 }
 
 .bannerText h3 {
+    font-family: "LindenHill", cursive;
     font-size: 1.8rem;
     color: #003366;
     margin: 0;
+    margin-top: 5%;
 }
 
 .bannerText span {
+    font-family: "LindenHill", cursive;
     color: #00bfa5;
     font-weight: 800;
 }
@@ -121,7 +140,7 @@
     background: white;
     border-radius: 20px;
     padding: 2rem;
-    width: 220px;
+    width: 15rem;
     text-align: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
@@ -169,6 +188,8 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
     transition: transform 0.4s ease;
+    width: 100%;
+    height: auto;
 }
 
 .newsImage:hover {
