@@ -50,7 +50,7 @@ pour la gestion des dossiers médicaux et la communication entre médecins et pa
 # Stack Technique
   Frontend : Next.js 
   Backend : Nest.js
-  Base de données : MongoDB
+  Base de données : PostgreSQL
   Architecture : API REST
   Notifications : React Hot Toast
   Styling : CSS simple
