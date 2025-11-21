@@ -27,7 +27,6 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--color-background); /* Arrière-plan gris clair */
     font-family: Arial, sans-serif;
 }
 
