@@ -44,12 +44,16 @@ export default function HomePage() {
             <div className={styles.spaceCard}>
               <Image src="/patient.png" alt="Patient" width={50} height={65} />
               <p>Patient Space</p>
-              <button className={styles.smallBtn}>View Result</button>
+              <button onClick={() => router.push("/PatientAuthentification")} className={styles.smallBtn}>
+                View Result
+              </button>
             </div>
             <div className={styles.spaceCard}>
               <Image src="/doctor.png" alt="Doctor" width={65} height={65} />
               <p>Doctor Space</p>
-              <button className={styles.smallBtn}>View Result</button>
+              <button onClick={() => router.push("/DoctorAuthentification")} className={styles.smallBtn}>
+                View Result
+              </button>
             </div>
           </div>
         </div>
