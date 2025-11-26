@@ -1,16 +1,20 @@
 /* --- Couleurs principales (estimées à partir de l'image) --- */
+
+
 /*
     Bleu foncé/principal (bouton, titre): #37678C
     Gris clair (arrière-plan principal): #F4F6F9 (très clair)
     Blanc (carte): #FFFFFF
 */
+
 @font-face {
-  font-family: "Lilita One";
-  src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: "Lilita One";
+    src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
+
 :root {
     --color-primary: #37678C;
     --color-background: #F4F6F9;
@@ -20,6 +24,7 @@
     --color-border: #CCCCCC;
 }
 
+
 /* --- Styles de la Page et de la structure principale --- */
 
 .authPageContainer {
@@ -27,9 +32,9 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--color-background); /* Arrière-plan gris clair */
     font-family: Arial, sans-serif;
 }
+
 
 /* --- Styles de l'En-tête (Header) et du Logo --- */
 
@@ -50,15 +55,16 @@
     background-color: var(--color-white);
     padding: 30px 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 450px; 
+    max-width: 450px;
     text-align: left;
 }
 
 .cardTitle {
     font-family: "Lilita One", cursive;
-    color: rgb(24, 0, 113); /* "Doctor Space" en bleu foncé */
+    color: rgb(24, 0, 113);
+    /* "Doctor Space" en bleu foncé */
     text-align: center;
     font-size: 1.8rem;
     font-weight: 70;
@@ -66,10 +72,12 @@
 }
 
 .cardSubtitle {
-    color: rgb(24, 0, 113); /* "Access to exam results" en gris */
+    color: rgb(24, 0, 113);
+    /* "Access to exam results" en gris */
     font-size: 1rem;
     margin-bottom: 15px;
 }
+
 
 /* --- Styles du Formulaire et des Champs --- */
 
@@ -88,12 +96,12 @@
 .inputGroup label {
     font-weight: 500;
     color: rgb(24, 0, 113);
-    flex-basis: 35%; 
+    flex-basis: 35%;
     padding-right: 15px;
 }
 
 .authInput {
-    flex-basis: 65%; 
+    flex-basis: 65%;
     padding: 10px 10px;
     border: 1px solid rgb(24, 0, 113);
     border-radius: 20px;
@@ -106,10 +114,12 @@
     box-shadow: 0 0 0 2px rgba(55, 103, 140, 0.2);
 }
 
+
 /* --- Styles du Bouton --- */
 
 .connexionButton {
-    background-color: rgb(24, 0, 113); /* Bleu foncé */
+    background-color: rgb(24, 0, 113);
+    /* Bleu foncé */
     color: var(--color-white);
     padding: 10px 20px;
     border: none;
@@ -123,7 +133,7 @@
 }
 
 .connexionButton:hover {
-    background-color: rgb(12, 0, 56); 
+    background-color: rgb(12, 0, 56);
 }
 
 .connexionButton:active {

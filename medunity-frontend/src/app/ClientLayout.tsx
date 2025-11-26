@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ToastProvider from '@/components/ToastProvider';
 import Navbar from '@/components/Navbar';
+import { usePathname } from 'next/navigation';
 
 // Create QueryClient once
 const queryClient = new QueryClient({
@@ -22,10 +23,15 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const hideNavbar =
+    pathname === '/PatientAuthentification' ||
+    pathname === '/DoctorAuthentification';
+
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider />
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <main>{children}</main>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
