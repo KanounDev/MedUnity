@@ -1,0 +1,107 @@
+/* src/components/AdminHeader.module.css */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 92%;
+    max-width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 40px;
+    border-radius: 50px;
+    margin-top: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    transition: all 0.3s ease;
+}
+
+.header:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+
+/* Logo Section – identical to public Navbar */
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+    color: #003366;
+    font-size: 1.35rem;
+}
+
+.logoImg {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoImg:hover {
+    transform: scale(1.12) rotate(8deg);
+}
+
+.logoText {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+
+/* Right side: Page title + logout */
+
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.pageInfo {
+    text-align: right;
+    line-height: 1.3;
+}
+
+.pageLabel {
+    font-size: 0.88rem;
+    color: #14b8a6;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pageTitle {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #0d9488;
+    margin-top: 4px;
+}
+
+.logoutButton {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.35);
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.45);
+}
+
+.logoutButton:active {
+    transform: translateY(-1px);
+}

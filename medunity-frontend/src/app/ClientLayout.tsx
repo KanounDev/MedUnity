@@ -26,7 +26,8 @@ export default function ClientLayout({
   const pathname = usePathname();
   const hideNavbar =
     pathname === '/PatientAuthentification' ||
-    pathname === '/DoctorAuthentification';
+    pathname === '/DoctorAuthentification' ||
+    pathname === '/Administrator';
 
   return (
     <QueryClientProvider client={queryClient}>
