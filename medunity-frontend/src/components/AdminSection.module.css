@@ -1,0 +1,83 @@
+/* src/components/AdminSection.module.css */
+
+.section {
+    margin-bottom: 4rem;
+    padding: 0 1.5rem;
+    /* adds side margins */
+}
+
+
+/* Title + Add button row */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 1.95rem;
+    font-weight: 800;
+    color: #93e6e0;
+    /* Deep rich teal – perfect contrast */
+    letter-spacing: -0.8px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    /* subtle shadow for extra pop */
+}
+
+
+/* Floating + button – same as public site */
+
+.addButton {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 32px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.addButton:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 14px 32px rgba(20, 184, 166, 0.55);
+}
+
+
+/* Main container – now compact and centered */
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    min-height: 160px;
+}
+
+
+/* Optional: subtle inner glow */
+
+.container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(204, 251, 241, 0.4), rgba(153, 246, 228, 0.2));
+    z-index: -1;
+}

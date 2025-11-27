@@ -1,0 +1,101 @@
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 18px;
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+    color: #0f766e;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px12px rgba(20, 184, 166, 0.3);
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.8rem 0;
+}
+
+.info p {
+    color: #475569;
+    margin: 0.4rem 0;
+    font-size: 1rem;
+}
+
+.qrCode {
+    font-family: 'Courier New', monospace;
+    color: #14b8a6;
+    font-weight: 600;
+    margin-top: 0.8rem !important;
+}
+
+.qrCode span {
+    background: #ecfdf5;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+}
+
+.actions {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.iconButton,
+.deleteButton {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.iconButton {
+    background: #f0fdfa;
+    color: #0f766e;
+}
+
+.icon:hover {
+    background: #ccfbf1;
+    transform: scale(1.12);
+}
+
+.deleteButton {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.deleteButton:hover {
+    background: #fee2e2;
+    transform: scale(1.12);
+}

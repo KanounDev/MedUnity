@@ -41,5 +41,22 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+<<<<<<< HEAD
   return <ClientLayoutContent>{children}</ClientLayoutContent>;
+=======
+  const pathname = usePathname();
+  const hideNavbar =
+    pathname === '/PatientAuthentification' ||
+    pathname === '/DoctorAuthentification' ||
+    pathname === '/Administrator';
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ToastProvider />
+      {!hideNavbar && <Navbar />}
+      <main>{children}</main>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+>>>>>>> b2257fc1457358eb6e32cbe8378173b147aafd78
 }
