@@ -13,7 +13,7 @@ const HeartIcon = () => (
     </div>
 );
 
-const DoctorAuthentification: React.FC = () => {
+const PatientAuthentification: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -67,4 +67,4 @@ const DoctorAuthentification: React.FC = () => {
     );
 };
 
-export default DoctorAuthentification;
+export default PatientAuthentification;
