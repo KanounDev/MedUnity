@@ -48,10 +48,10 @@ export default function AddEditModal<T>({
 
           <div className={styles.actions}>
             <button onClick={onClose} className={styles.btnCancel}>
-              Annuler
+              Cancel
             </button>
             <button onClick={handleSave} className={styles.btnSave}>
-              Enregistrer
+              Save
             </button>
           </div>
         </div>

@@ -70,22 +70,35 @@
     padding-top: 0.5rem;
 }
 
-.iconButton {
-    background: #f0fdfa;
-    border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+.iconButton,
+.deleteButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
     cursor: pointer;
     transition: all 0.2s;
-    color: #0f766e;
+}
+
+.iconButton {
+    background: #ecfdf5;
+    color: #10b981;
 }
 
 .iconButton:hover {
-    background: #ccfbf1;
+    background: #d1fae5;
     transform: scale(1.1);
-    color: #14b8a6;
+}
+
+.deleteButton {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.deleteButton:hover {
+    background: #fee2e2;
+    transform: scale(1.1);
 }
