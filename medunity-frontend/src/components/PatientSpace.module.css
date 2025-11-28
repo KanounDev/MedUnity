@@ -1,0 +1,100 @@
+/* Variables pour les couleurs */
+:root {
+  --med-blue: #007bff; 
+  --light-mint: #e0fcf4; 
+  --card-bg: #f4f4f4; 
+  --border-color: #ccc;
+  --pdf-button-bg: #343a40;
+  --text-color: #333;
+}
+
+.patientPage {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  min-height: 100vh;
+  
+}
+
+
+.pageTitle {
+  font-size: 1.5em;
+  font-weight: normal;
+  color: var(--text-color);
+}
+
+.box {
+  background-color: var(--light-mint);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 20px;
+}
+/* --- Conteneur de la liste --- */
+.listContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+.listHeader {
+  background-color: var(--light-mint);
+  padding: 15px 20px;
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 0;
+  border-radius: 5px 5px 0 0; 
+}
+
+/* --- Carte de la liste des tests --- */
+.testListCard {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Tableau des tests --- */
+.testTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.testTable th,
+.testTable td {
+  padding: 10px;
+  text-align: left;
+}
+
+.testTable th {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Style spécifique pour le bouton PDF */
+.downloadBtn {
+  background-color: var(--pdf-button-bg);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.downloadBtn:hover {
+  background-color: #495057;
+}
+
+/* Ajustement de la largeur des colonnes */
+.testTable th:nth-child(1), .testTable td:nth-child(1) { width: 35%; }
+.testTable th:nth-child(2), .testTable td:nth-child(2) { width: 25%; }
+.testTable th:nth-child(3), .testTable td:nth-child(3) { width: 20%; }
+.testTable th:nth-child(4), .testTable td:nth-child(4) { width: 20%; }
