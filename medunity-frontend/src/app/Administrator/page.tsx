@@ -10,18 +10,9 @@ import AdminNewsCard from '@/components/AdminNewsCard';
 import AdminPatientCard from '@/components/AdminPatientCard';
 import AddEditModal from '@/components/AddEditModal';
 import AdminHeader from '@/components/AdminHeader';
-import { Doctor, Activity, News } from '@/types';
+import { Doctor, Patient, Activity, News } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
-// Extended types
-interface Patient {
-  id: string;
-  fullName: string;
-  birthDate: string;
-  phone: string;
-  email: string;
-  qrCode?: string;
-}
 
 // Mock data
 const initialDoctors: Doctor[] = [
@@ -66,7 +57,32 @@ const initialActivities: Activity[] = [
   },
 ];
 
-const initialNews: News[] = [];
+const initialNews: News[] = [
+  {
+    id: 'n1',
+    title: 'Nouveau laboratoire inauguré',
+    date: 'Novembre 2025',
+    content:
+      'Nous sommes fiers d’annoncer l’ouverture de notre nouveau laboratoire d’anatomie pathologique équipé des technologies les plus modernes pour un diagnostic encore plus précis et rapide.',
+    image: '/news/lab-inauguration.jpg',
+  },
+  {
+    id: 'n2',
+    title: 'Journée portes ouvertes',
+    date: '15 Décembre 2025',
+    content:
+      'Venez découvrir nos installations et rencontrer notre équipe lors de notre journée portes ouvertes. Inscription obligatoire.',
+    image: '/news/open-day.jpg',
+  },
+  {
+    id: 'n3',
+    title: 'Partenariat avec l’hôpital central',
+    date: 'Octobre 2025',
+    content:
+      'MedUnity signe un partenariat stratégique avec l’hôpital central pour renforcer l’accès aux analyses spécialisées.',
+    image: '/news/partnership.jpg',
+  },
+];
 
 const initialPatients: Patient[] = [
   {
@@ -75,7 +91,7 @@ const initialPatients: Patient[] = [
     birthDate: '1985-03-15',
     phone: '+216 98 123 456',
     email: 'ahmed.bensalah@gmail.com',
-    qrCode: 'QR-AHMED-001',
+    photo: '/patients/ahmed-bensalah.jpg',
   },
 ];
 
@@ -223,7 +239,7 @@ export default function AdministratorPage() {
       <AddEditModal<Doctor>
         isOpen={modal.open && modal.type === 'doctor'}
         onClose={closeModal}
-        title={modal.edit ? 'Modifier le médecin' : 'Ajouter un médecin'}
+        title={modal.edit ? 'Edit the doctor' : 'Add a doctor'}
         initial={modal.edit}
         onSave={saveDoctor}
       >
@@ -245,19 +261,19 @@ export default function AdministratorPage() {
             <>
               <input
                 className={styles.input}
-                placeholder="Nom complet"
+                placeholder="Full Name"
                 value={data.name ?? ''}
                 onChange={(e) => set({ name: e.target.value })}
               />
               <input
                 className={styles.input}
-                placeholder="Spécialité"
+                placeholder="Specialty"
                 value={data.specialty ?? ''}
                 onChange={(e) => set({ specialty: e.target.value })}
               />
               <textarea
                 className={styles.textarea}
-                placeholder="Diplômes (un par ligne)"
+                placeholder="Diplomats (one line)"
                 value={(data.degrees ?? []).join('\n')}
                 onChange={(e) => set({ degrees: e.target.value.split('\n').filter(Boolean) })}
                 rows={5}
@@ -276,7 +292,7 @@ export default function AdministratorPage() {
                   <div className={styles.photoPreview}>
                     <img
                       src={photoPreview}
-                      alt="Aperçu"
+                      alt="Preview"
                       className={styles.photoPreviewImg}
                     />
                   </div>
@@ -291,7 +307,7 @@ export default function AdministratorPage() {
       <AddEditModal<Activity>
         isOpen={modal.open && modal.type === 'activity'}
         onClose={closeModal}
-        title={modal.edit ? 'Modifier l’activité' : 'Ajouter une activité'}
+        title={modal.edit ? 'Edit the activity' : 'Add an activity'}
         initial={modal.edit}
         onSave={saveActivity}
       >
@@ -312,7 +328,7 @@ export default function AdministratorPage() {
             <>
               <input
                 className={styles.input}
-                placeholder="Titre"
+                placeholder="Title"
                 value={data.title ?? ''}
                 onChange={(e) => set({ title: e.target.value })}
               />
@@ -335,7 +351,7 @@ export default function AdministratorPage() {
                   <div className={styles.photoPreview}>
                     <img
                       src={photoPreview}
-                      alt="Aperçu"
+                      alt="Preview"
                       className={styles.photoPreviewImg}
                     />
                   </div>
@@ -350,7 +366,7 @@ export default function AdministratorPage() {
       <AddEditModal<News>
         isOpen={modal.open && modal.type === 'news'}
         onClose={closeModal}
-        title={modal.edit ? 'Modifier l’actualité' : 'Ajouter une actualité'}
+        title={modal.edit ? 'Edit the news' : 'Add news'}
         initial={modal.edit}
         onSave={saveNews}
       >
@@ -371,19 +387,19 @@ export default function AdministratorPage() {
             <>
               <input
                 className={styles.input}
-                placeholder="Titre"
+                placeholder="Title"
                 value={data.title ?? ''}
                 onChange={(e) => set({ title: e.target.value })}
               />
               <input
                 className={styles.input}
-                placeholder="Date (ex: Novembre 2025)"
+                placeholder="Date (ex: November 2025)"
                 value={data.date ?? ''}
                 onChange={(e) => set({ date: e.target.value })}
               />
               <textarea
                 className={styles.textarea}
-                placeholder="Contenu"
+                placeholder="Content"
                 value={data.content ?? ''}
                 onChange={(e) => set({ content: e.target.value })}
                 rows={7}
@@ -400,7 +416,7 @@ export default function AdministratorPage() {
                   <div className={styles.photoPreview}>
                     <img
                       src={photoPreview}
-                      alt="Aperçu"
+                      alt="Preview"
                       className={styles.photoPreviewImg}
                     />
                   </div>
@@ -415,7 +431,7 @@ export default function AdministratorPage() {
       <AddEditModal<Patient>
         isOpen={modal.open && modal.type === 'patient'}
         onClose={closeModal}
-        title={modal.edit ? 'Modifier le patient' : 'Ajouter un patient'}
+        title={modal.edit ? 'Edit the patient' : 'Add a patient'}
         initial={modal.edit}
         onSave={savePatient}
       >
@@ -437,7 +453,7 @@ export default function AdministratorPage() {
             <>
               <input
                 className={styles.input}
-                placeholder="Nom complet"
+                placeholder="Full Name"
                 value={data.fullName ?? ''}
                 onChange={(e) => set({ fullName: e.target.value })}
               />
@@ -449,9 +465,16 @@ export default function AdministratorPage() {
               />
               <input
                 className={styles.input}
-                placeholder="Téléphone"
+                placeholder="Phone number"
                 value={data.phone ?? ''}
                 onChange={(e) => set({ phone: e.target.value })}
+              />
+              <input
+                type="email"
+                className={styles.input}
+                placeholder="Email"
+                value={data.email ?? ''}
+                onChange={(e) => set({ email: e.target.value })}
               />
               <div className={`${styles.photoUploadContainer} space-y-3`}>
                 <label className={styles.photoUploadLabel}>Patient Image</label>
@@ -465,7 +488,7 @@ export default function AdministratorPage() {
                   <div className={styles.photoPreview}>
                     <img
                       src={photoPreview}
-                      alt="Aperçu"
+                      alt="Preview"
                       className={styles.photoPreviewImg}
                     />
                   </div>

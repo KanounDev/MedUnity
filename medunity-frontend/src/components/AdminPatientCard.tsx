@@ -1,15 +1,9 @@
 'use client';
-
+import { Patient } from '@/types';
+import Image from 'next/image';
 import styles from './AdminPatientCard.module.css';
 
-interface Patient {
-  id: string;
-  fullName: string;
-  birthDate: string;
-  phone: string;
-  email: string;
-  qrCode?: string;
-}
+
 
 interface Props {
   patient: Patient;
@@ -30,17 +24,20 @@ export default function AdminPatientCard({ patient, onEdit, onDelete }: Props) {
   return (
     <div className={styles.card}>
       <div className={styles.info}>
-        <div className={styles.avatar}>
-          {initials}
+        <div className={styles.photo}>
+          <Image
+            src={patient.photo || '/placeholder-doctor.jpg'}
+            alt={patient.fullName}
+            width={80}
+            height={80}
+            className={styles.photoImg}
+          />
         </div>
         <div className={styles.details}>
           <h4 className={styles.name}>{patient.fullName}</h4>
           <p>Né(e) le : {formatDate(patient.birthDate)}</p>
           <p>Téléphone : {patient.phone}</p>
           <p>Email : {patient.email}</p>
-          {patient.qrCode && (
-            <p className={styles.qrCode}>QR: <span>{patient.qrCode}</span></p>
-          )}
         </div>
       </div>
 

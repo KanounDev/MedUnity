@@ -18,32 +18,11 @@ const queryClient = new QueryClient({
   },
 });
 
-function ClientLayoutContent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  const hideNavbar = pathname === '/PatientAuthentification' || pathname === '/DoctorAuthentification';
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ToastProvider />
-      {!hideNavbar && <Navbar />}
-      <main>{children}</main>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  );
-}
-
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-<<<<<<< HEAD
-  return <ClientLayoutContent>{children}</ClientLayoutContent>;
-=======
   const pathname = usePathname();
   const hideNavbar =
     pathname === '/PatientAuthentification' ||
@@ -58,5 +37,4 @@ export default function ClientLayout({
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
->>>>>>> b2257fc1457358eb6e32cbe8378173b147aafd78
 }
