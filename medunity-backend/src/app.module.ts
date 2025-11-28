@@ -3,6 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GeminiModule } from './gemini/gemini.module'; // 👈 NEW: Import the Gemini Module
 import { ContactModule } from './contact/contact.module';
+import { DoctorModule } from './doctor/doctor.module';
+import { ActivityModule } from './activity/activity.module';
+import { NewsModule } from './news/news.module';
+import { PatientModule } from './patients/patient.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -22,6 +26,10 @@ import { ContactModule } from './contact/contact.module';
     }),
     GeminiModule, 
     ContactModule,
+    DoctorModule,
+    ActivityModule,
+    NewsModule,
+    PatientModule,
    ],
 })
 export class AppModule {}

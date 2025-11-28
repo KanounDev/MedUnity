@@ -3,6 +3,7 @@ export type Doctor = {
   name: string;
   title: string; // e.g. "Dr Thomas PETIT"
   specialty: string;
+  email:string;
   degrees: string[];
   experience: string;
   photo: string;
@@ -22,4 +23,10 @@ export type News = {
   date: string;        // e.g. "Novembre 2025"
   content: string;
   image: string;       // base64 or URL
+};
+export type Activity = {
+id:string;
+title:string;
+description:string;
+image:string; // base64 or URL
 };

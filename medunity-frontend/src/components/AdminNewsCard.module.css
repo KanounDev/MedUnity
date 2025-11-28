@@ -2,14 +2,12 @@
 
 .card {
     display: flex;
-    align-items: stretch;
     background: white;
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
     margin-bottom: 2rem;
-    transition: all 0.3s ease;
-    height: 220px;
+    transition: transform 0.3s ease;
 }
 
 .card:hover {

@@ -26,6 +26,7 @@ export default function AdminDoctorCard({ doctor, onEdit, onDelete }: Props) {
         <div className={styles.details}>
           <h3 className={styles.name}>{doctor.name}</h3>
           <p className={styles.specialty}>{doctor.specialty}</p>
+          <p className={styles.email}>{doctor.email}</p>
           <ul className={styles.degrees}>
             {doctor.degrees.map((deg, i) => (
               <li key={i}>{deg}</li>
