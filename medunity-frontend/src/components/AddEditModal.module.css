@@ -1,3 +1,80 @@
+.photoFileInput {
+    display: block;
+    width: 100%;
+    font-size: 0.95rem;
+    color: #4b5563;
+    font-weight: 600;
+    border: none;
+    border-radius: 9999px;
+    background: #f0fdfa;
+    padding: 12px 20px;
+    margin-right: 16px;
+    transition: background 0.2s;
+    /* Prevent file input from expanding modal */
+    max-width: 350px;
+    margin-bottom: 8px;
+}
+
+.photoFileInput:hover {
+    background: #ccfbf1;
+}
+
+.photoFileInput::file-selector-button {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    padding: 0.7rem 1.4rem;
+    margin-right: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.18);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.photoFileInput::file-selector-button:hover {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    transform: translateY(-2px);
+}
+
+.photoPreviewImg {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    border: 4px solid #d1fae5;
+}
+
+
+/* Photo upload container styling */
+
+.photoUploadContainer {
+    background: #f0fdfa;
+    border-radius: 18px;
+    padding: 18px 22px;
+    margin-top: 18px;
+    box-shadow: 0 2px 12px rgba(20, 184, 166, 0.08);
+    border: 1px solid #d1fae5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.photoUploadLabel {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0d9488;
+    margin-bottom: 6px;
+}
+
+.photoPreview {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+
 /* src/components/AddEditModal.module.css */
 
 .overlay {
@@ -21,6 +98,28 @@
     overflow: hidden;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22), 0 10px 20px rgba(0, 0, 0, 0.1);
     animation: modalRise 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #14b8a6 #e0f2f1;
+}
+
+
+/* Chrome, Edge, Safari scrollbar styling */
+
+.modal::-webkit-scrollbar {
+    width: 8px;
+    background: #e0f2f1;
+    border-radius: 8px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background: #14b8a6;
+    border-radius: 8px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+    background: #0d9488;
 }
 
 

@@ -83,6 +83,8 @@ export default function AdministratorPage() {
   const router = useRouter();
 
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
+  // Doctor photo preview state for modal
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [activities, setActivities] = useState<Activity[]>(initialActivities);
   const [news, setNews] = useState<News[]>(initialNews);
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
@@ -93,9 +95,18 @@ export default function AdministratorPage() {
     edit?: any;
   }>({ open: false, type: 'doctor' });
 
-  const openAdd = (type: typeof modal.type) => setModal({ open: true, type });
-  const openEdit = (type: typeof modal.type, item: any) => setModal({ open: true, type, edit: item });
-  const closeModal = () => setModal({ open: false, type: 'doctor' });
+  const openAdd = (type: typeof modal.type) => {
+    setModal({ open: true, type });
+    if (type === 'doctor') setPhotoPreview(null);
+  };
+  const openEdit = (type: typeof modal.type, item: any) => {
+    setModal({ open: true, type, edit: item });
+    if (type === 'doctor') setPhotoPreview(item?.photo || null);
+  };
+  const closeModal = () => {
+    setModal({ open: false, type: 'doctor' });
+    setPhotoPreview(null);
+  };
 
   const saveDoctor = (data: Doctor) => {
     if (data.id) {
@@ -208,53 +219,75 @@ export default function AdministratorPage() {
       </main>
 
       {/* Modals */}
+      {/* ==================== DOCTOR MODAL ==================== */}
       <AddEditModal<Doctor>
-  isOpen={modal.open && modal.type === 'doctor'}
-  onClose={closeModal}
-  title={modal.edit ? 'Modifier le médecin' : 'Ajouter un médecin'}
-  initial={modal.edit}
-  onSave={saveDoctor}
->
-  {(data, set) => (
-    <>
-      {/* BEFORE: no className → ugly default browser style */}
-      {/* <input placeholder="Nom complet" ... /> */}
+        isOpen={modal.open && modal.type === 'doctor'}
+        onClose={closeModal}
+        title={modal.edit ? 'Modifier le médecin' : 'Ajouter un médecin'}
+        initial={modal.edit}
+        onSave={saveDoctor}
+      >
+        {(data, set) => {
+          const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const result = reader.result as string;
+                setPhotoPreview(result);
+                set({ photo: result }); // Save as base64
+              };
+              reader.readAsDataURL(file);
+            }
+          };
 
-      {/* AFTER: with className → GORGEOUS */}
-      <input
-        className={styles.input}
-        placeholder="Nom complet"
-        value={data.name ?? ''}
-        onChange={(e) => set({ name: e.target.value })}
-      />
+          return (
+            <>
+              <input
+                className={styles.input}
+                placeholder="Nom complet"
+                value={data.name ?? ''}
+                onChange={(e) => set({ name: e.target.value })}
+              />
+              <input
+                className={styles.input}
+                placeholder="Spécialité"
+                value={data.specialty ?? ''}
+                onChange={(e) => set({ specialty: e.target.value })}
+              />
+              <textarea
+                className={styles.textarea}
+                placeholder="Diplômes (un par ligne)"
+                value={(data.degrees ?? []).join('\n')}
+                onChange={(e) => set({ degrees: e.target.value.split('\n').filter(Boolean) })}
+                rows={5}
+              />
 
-      <input
-        className={styles.input}
-        placeholder="Spécialité"
-        value={data.specialty ?? ''}
-        onChange={(e) => set({ specialty: e.target.value })}
-      />
+              {/* PHOTO UPLOAD WITH PREVIEW */}
+              <div className={`${styles.photoUploadContainer} space-y-3`}>
+                <label className={styles.photoUploadLabel}>Doctor Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className={styles.photoFileInput}
+                />
+                {photoPreview && (
+                  <div className={styles.photoPreview}>
+                    <img
+                      src={photoPreview}
+                      alt="Aperçu"
+                      className={styles.photoPreviewImg}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          );
+        }}
+      </AddEditModal>
 
-      <textarea
-        className={styles.textarea}
-        placeholder="Diplômes (un par ligne)"
-        value={(data.degrees ?? []).join('\n')}
-        onChange={(e) =>
-          set({ degrees: e.target.value.split('\n').filter(Boolean) })
-        }
-        rows={4}
-      />
-
-      <input
-        className={styles.input}
-        placeholder="URL photo (optionnel)"
-        value={data.photo ?? ''}
-        onChange={(e) => set({ photo: e.target.value })}
-      />
-    </>
-  )}
-</AddEditModal>
-
+      {/* ==================== ACTIVITY MODAL ==================== */}
       <AddEditModal<Activity>
         isOpen={modal.open && modal.type === 'activity'}
         onClose={closeModal}
@@ -262,15 +295,58 @@ export default function AdministratorPage() {
         initial={modal.edit}
         onSave={saveActivity}
       >
-        {(data, set) => (
-          <>
-            <input placeholder="Titre" value={data.title ?? ''} onChange={e => set({ title: e.target.value })} className="w-full p-3 border rounded-lg" />
-            <textarea placeholder="Description" value={data.description ?? ''} onChange={e => set({ description: e.target.value })} rows={5} className="w-full p-3 border rounded-lg mt-3" />
-            <input placeholder="URL image" value={data.image ?? ''} onChange={e => set({ image: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-          </>
-        )}
+        {(data, set) => {
+          const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const result = reader.result as string;
+                setPhotoPreview(result);
+                set({ photo: result }); // Save as base64
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          return (
+            <>
+              <input
+                className={styles.input}
+                placeholder="Titre"
+                value={data.title ?? ''}
+                onChange={(e) => set({ title: e.target.value })}
+              />
+              <textarea
+                className={styles.textarea}
+                placeholder="Description"
+                value={data.description ?? ''}
+                onChange={(e) => set({ description: e.target.value })}
+                rows={6}
+              />
+              <div className={`${styles.photoUploadContainer} space-y-3`}>
+                <label className={styles.photoUploadLabel}>Activity Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className={styles.photoFileInput}
+                />
+                {photoPreview && (
+                  <div className={styles.photoPreview}>
+                    <img
+                      src={photoPreview}
+                      alt="Aperçu"
+                      className={styles.photoPreviewImg}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          );
+        }}
       </AddEditModal>
 
+      {/* ==================== NEWS MODAL ==================== */}
       <AddEditModal<News>
         isOpen={modal.open && modal.type === 'news'}
         onClose={closeModal}
@@ -278,16 +354,64 @@ export default function AdministratorPage() {
         initial={modal.edit}
         onSave={saveNews}
       >
-        {(data, set) => (
-          <>
-            <input placeholder="Titre" value={data.title ?? ''} onChange={e => set({ title: e.target.value })} className="w-full p-3 border rounded-lg" />
-            <input placeholder="Date" value={data.date ?? ''} onChange={e => set({ date: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-            <textarea placeholder="Contenu" value={data.content ?? ''} onChange={e => set({ content: e.target.value })} rows={5} className="w-full p-3 border rounded-lg mt-3" />
-            <input placeholder="URL image" value={data.image ?? ''} onChange={e => set({ image: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-          </>
-        )}
+        {(data, set) => {
+          const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const result = reader.result as string;
+                setPhotoPreview(result);
+                set({ photo: result }); // Save as base64
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          return (
+            <>
+              <input
+                className={styles.input}
+                placeholder="Titre"
+                value={data.title ?? ''}
+                onChange={(e) => set({ title: e.target.value })}
+              />
+              <input
+                className={styles.input}
+                placeholder="Date (ex: Novembre 2025)"
+                value={data.date ?? ''}
+                onChange={(e) => set({ date: e.target.value })}
+              />
+              <textarea
+                className={styles.textarea}
+                placeholder="Contenu"
+                value={data.content ?? ''}
+                onChange={(e) => set({ content: e.target.value })}
+                rows={7}
+              />
+              <div className={`${styles.photoUploadContainer} space-y-3`}>
+                <label className={styles.photoUploadLabel}>News Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className={styles.photoFileInput}
+                />
+                {photoPreview && (
+                  <div className={styles.photoPreview}>
+                    <img
+                      src={photoPreview}
+                      alt="Aperçu"
+                      className={styles.photoPreviewImg}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          );
+        }}
       </AddEditModal>
 
+      {/* ==================== PATIENT MODAL ==================== */}
       <AddEditModal<Patient>
         isOpen={modal.open && modal.type === 'patient'}
         onClose={closeModal}
@@ -295,14 +419,61 @@ export default function AdministratorPage() {
         initial={modal.edit}
         onSave={savePatient}
       >
-        {(data, set) => (
-          <>
-            <input placeholder="Nom complet" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} className="w-full p-3 border rounded-lg" />
-            <input type="date" placeholder="Date de naissance" value={data.birthDate ?? ''} onChange={e => set({ birthDate: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-            <input placeholder="Téléphone" value={data.phone ?? ''} onChange={e => set({ phone: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-            <input type="email" placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} className="w-full p-3 border rounded-lg mt-3" />
-          </>
-        )}
+        {(data, set) => {
+          const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const result = reader.result as string;
+                setPhotoPreview(result);
+                set({ photo: result }); // Save as base64
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+
+          return (
+            <>
+              <input
+                className={styles.input}
+                placeholder="Nom complet"
+                value={data.fullName ?? ''}
+                onChange={(e) => set({ fullName: e.target.value })}
+              />
+              <input
+                type="date"
+                className={styles.input}
+                value={data.birthDate ?? ''}
+                onChange={(e) => set({ birthDate: e.target.value })}
+              />
+              <input
+                className={styles.input}
+                placeholder="Téléphone"
+                value={data.phone ?? ''}
+                onChange={(e) => set({ phone: e.target.value })}
+              />
+              <div className={`${styles.photoUploadContainer} space-y-3`}>
+                <label className={styles.photoUploadLabel}>Patient Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className={styles.photoFileInput}
+                />
+                {photoPreview && (
+                  <div className={styles.photoPreview}>
+                    <img
+                      src={photoPreview}
+                      alt="Aperçu"
+                      className={styles.photoPreviewImg}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          );
+        }}
       </AddEditModal>
     </div>
   );
