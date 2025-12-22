@@ -1,57 +1,75 @@
 // components/TeamSection.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DoctorCard from "./DoctorCard";
 import DoctorModal from "./DoctorModal";
 import { Doctor } from "@/types";
 import styles from "./TeamSection.module.css";
 import Image from "next/image";
 
-const doctors: Doctor[] = [
-  {
-    id: "1",
-    name: "Dr Sami Feki",
-    title: "Pathologiste",
-    specialty: "Cytologie & Histologie",
-    degrees: ["MD", "PhD en Pathologie"],
-    experience: "15+ ans",
-    photo: "/doctors/doctor1.png",
-    bio: "Spécialiste en cytologie et histologie, ancien chef de service à l’Hôpital Cochin.",
-  },
-  {
-    id: "2",
-    name: "Dr Hasan Jemni",
-    title: "Pathologiste",
-    specialty: "Uropathologie",
-    degrees: ["MD", "Spécialiste en Uropathologie"],
-    experience: "20+ ans",
-    photo: "/doctors/doctor2.png",
-    bio: "Expert en uropathologie, conférencier international.",
-  },
-  {
-    id: "3",
-    name: "Dr Kamel Masmoudi",
-    title: "Pathologiste",
-    specialty: "Dermatopathologie",
-    degrees: ["MD", "DES de Dermatopathologie"],
-    experience: "12+ ans",
-    photo: "/doctors/doctor3.png",
-    bio: "Spécialisée en dermatopathologie et médecine légale.",
-  },
-  // Add more doctors...
-];
+const API_URL = "http://localhost:3002"; // Your NestJS backend
 
 export default function TeamSection() {
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selected, setSelected] = useState<Doctor | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const res = await fetch(`${API_URL}/doctors`);
+        if (!res.ok) throw new Error("Impossible de charger les médecins");
+        const data = await res.json();
+
+        // Map backend fields → frontend expected fields
+        const mappedDoctors: Doctor[] = data.map((d: any) => ({
+          id: d.id,
+          name: d.name,
+          title: d.title || "",
+          specialty: d.specialty,
+          degrees: d.degrees || [],
+          experience: d.experience || "",
+          photo: d.photo || "/placeholder-doctor.jpg", // fallback image
+          bio: d.bio || "Médecin pathologiste expérimenté.",
+          email: d.email,
+        }));
+
+        setDoctors(mappedDoctors);
+      } catch (err) {
+        setError("Erreur lors du chargement de l'équipe");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className={styles.container}>
+        <p className="text-center py-20 text-gray-600">Chargement de l'équipe médicale...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={styles.container}>
+        <p className="text-center py-20 text-red-600">{error}</p>
+      </section>
+    );
+  }
 
   return (
     <>
-
       <section className={styles.container}>
         <h1 className={styles.title}>Une Équipe de Médecins Passionnés</h1>
         <p className={styles.subtitle}>
-          9 médecins pathologistes à votre service, formés dans les plus grands établissements
+          {doctors.length} médecin(s) pathologiste(s) à votre service, formés dans les plus grands établissements
         </p>
 
         {/* Banners */}
@@ -75,17 +93,23 @@ export default function TeamSection() {
         </div>
 
         <div className={styles.count}>
-          <h2>9 MÉDECINS PATHOLOGISTES</h2>
+          <h2>{doctors.length} MÉDECINS PATHOLOGISTES</h2>
         </div>
 
         <hr className={styles.divider} />
 
         {/* Doctor Grid */}
-        <div className={styles.grid}>
-          {doctors.map((doc) => (
-            <DoctorCard key={doc.id} doctor={doc} onClick={() => setSelected(doc)} />
-          ))}
-        </div>
+        {doctors.length === 0 ? (
+          <p className="text-center py-16 text-gray-500">
+            Aucun médecin n'a encore été ajouté.
+          </p>
+        ) : (
+          <div className={styles.grid}>
+            {doctors.map((doc) => (
+              <DoctorCard key={doc.id} doctor={doc} onClick={() => setSelected(doc)} />
+            ))}
+          </div>
+        )}
 
         <DoctorModal doctor={selected} onClose={() => setSelected(null)} />
       </section>
