@@ -11,6 +11,9 @@ export class Patient {
   @Column({ unique: true })
   email: string;
 
+  @Column({ nullable: true })
+  password: string;
+
   @Column()
   birthDate: string; // format: "1990-05-15" or "15/05/1990" – you choose
 

@@ -11,8 +11,9 @@ export class News {
   @Column()
   date: string; // e.g. "Novembre 2025"
 
-  @Column('text')
-  content: string;
+  @Column('json', { nullable: true })
+  paragraphs?: string[]; // each element is a paragraph
+
 
   @Column({ nullable: true })
   image?: string; // base64 or URL

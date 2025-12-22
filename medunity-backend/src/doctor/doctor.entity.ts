@@ -30,6 +30,9 @@ export class Doctor {
   @Column({ unique: true })
   email: string;
 
+  @Column({ nullable: true })
+  password: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

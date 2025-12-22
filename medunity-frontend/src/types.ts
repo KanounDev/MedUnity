@@ -4,6 +4,7 @@ export type Doctor = {
   title: string; // e.g. "Dr Thomas PETIT"
   specialty: string;
   email:string;
+  password:string;
   degrees: string[];
   experience: string;
   photo: string;
@@ -13,6 +14,7 @@ export type Patient = {
   id: string;
   fullName: string;
   email: string;
+  password: string;
   birthDate: string;
   phone: string;
   photo: string;

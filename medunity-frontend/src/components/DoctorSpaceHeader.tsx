@@ -1,21 +1,20 @@
-// src/components/AdminHeader.tsx
-'use client';
+"use client";
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import styles from './AdminHeader.module.css';
+import styles from './AdminHeader.module.css'; // We'll create this CSS file
 
-export default function AdminHeader() {
+export default function DoctorSpaceHeader() {
   const router = useRouter();
 
   const handleLogout = () => {
+    sessionStorage.removeItem('isDoctor');
     sessionStorage.removeItem('isAdmin');
-    router.push('/PatientAuthentification');
+    router.push('/DoctorAuthentication');
   };
 
   return (
     <header className={styles.header}>
-      {/* Logo + Brand – exactly like public site */}
       <div className={styles.logoSection}>
         <Image
           src="/medunity.png"
@@ -28,10 +27,9 @@ export default function AdminHeader() {
         <span className={styles.logoText}>MedUnity</span>
       </div>
 
-      {/* Right side */}
       <div className={styles.rightSection}>
         <div className={styles.pageInfo}>
-          <h2 className={styles.pageTitle}>Patient Space</h2>
+          <h2 className={styles.pageTitle}>Doctor Space</h2>
         </div>
 
         <button onClick={handleLogout} className={styles.logoutButton}>

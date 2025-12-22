@@ -26,6 +26,8 @@ export default function AdministratorPage() {
 
   const [news, setNews] = useState<News[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const [modal, setModal] = useState<{
     open: boolean;
@@ -66,6 +68,15 @@ export default function AdministratorPage() {
   const openAdd = (type: typeof modal.type) => setModal({ open: true, type });
   const openEdit = (type: typeof modal.type, item: any) => setModal({ open: true, type, edit: item });
   const closeModal = () => setModal({ open: false, type: 'doctor' });
+  // Generates a random 12-character password
+  const generateRandomPassword = (length = 12) => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+    let password = '';
+    for (let i = 0; i < length; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+  };
 
   // === SAVE DOCTOR (CREATE / UPDATE) ===
   const saveDoctor = async (data: Doctor) => {
@@ -242,20 +253,99 @@ export default function AdministratorPage() {
                 reader.readAsDataURL(file);
               }
             };
+
             return (
               <>
-                <input className={styles.input} placeholder="Full Name" value={data.name ?? ''} onChange={e => set({ name: e.target.value })} />
-                {/* <input className={styles.input} placeholder="Titre" value={data.title ?? ''} onChange={e => set({ title: e.target.value })} /> */}
-                <input className={styles.input} placeholder="Specialty" value={data.specialty ?? ''} onChange={e => set({ specialty: e.target.value })} />
-                <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} />
+                <input
+                  className={styles.input}
+                  placeholder="Full Name"
+                  value={data.name ?? ''}
+                  onChange={e => set({ name: e.target.value })}
+                />
+
+                <input
+                  className={styles.input}
+                  placeholder="Title"
+                  value={data.title ?? ''}
+                  onChange={e => set({ title: e.target.value })}
+                />
+
+                <input
+                  className={styles.input}
+                  placeholder="Specialty"
+                  value={data.specialty ?? ''}
+                  onChange={e => set({ specialty: e.target.value })}
+                />
+
+                <input
+                  className={styles.input}
+                  placeholder="Email"
+                  value={data.email ?? ''}
+                  onChange={e => set({ email: e.target.value })}
+                />
+
+                <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
+                  <input
+                    className={styles.input}
+                    placeholder="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={data.password ?? ''}
+                    onChange={e => set({ password: e.target.value })}
+                    onFocus={() => {
+                      if (!data.password) {
+                        const randomPass = generateRandomPassword();
+                        set({ password: randomPass });
+                      }
+                    }}
+                    style={{ paddingRight: '2.5rem' }} // space for the eye button
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => !prev)}
+                    style={{
+                      position: 'absolute',
+                      right: '0.5rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '1.1rem',
+                      color: '#555',
+                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? '🔓' : '🔒'}
+                  </button>
+                </div>
+
+
+
                 <textarea
                   className={styles.textarea}
                   placeholder="Diplomats (one per line)"
                   value={(data.degrees ?? []).join('\n')}
-                  onChange={e => set({ degrees: e.target.value.split('\n').filter(Boolean) })}
+                  onChange={e =>
+                    set({ degrees: e.target.value.split('\n').filter(Boolean) })
+                  }
                   rows={4}
                 />
-                {/* <input className={styles.input} placeholder="Expérience" value={data.experience ?? ''} onChange={e => set({ experience: e.target.value })} /> */}
+
+                <input
+                  className={styles.textarea}
+                  placeholder="Experience"
+                  value={data.experience ?? ''}
+                  onChange={e => set({ experience: e.target.value })}
+                />
+
+                <textarea
+                  className={styles.textarea}
+                  placeholder="Bio"
+                  value={data.bio ?? ''}
+                  onChange={e => set({ bio: e.target.value })}
+                  rows={3}
+                />
+
                 <div className={styles.photoUploadContainer}>
                   <label className={styles.photoUploadLabel}>Doctor Image</label>
                   <input
@@ -272,6 +362,7 @@ export default function AdministratorPage() {
             );
           }}
         </AddEditModal>
+
         {/* ACTIVITY MODAL */}
         <AddEditModal<Activity>
           isOpen={modal.open && modal.type === 'activity'}
