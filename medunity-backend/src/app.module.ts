@@ -7,6 +7,8 @@ import { DoctorModule } from './doctor/doctor.module';
 import { ActivityModule } from './activity/activity.module';
 import { NewsModule } from './news/news.module';
 import { PatientModule } from './patients/patient.module';
+import { ExamModule } from './exam/exam.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -30,6 +32,8 @@ import { PatientModule } from './patients/patient.module';
     ActivityModule,
     NewsModule,
     PatientModule,
+    ExamModule,
+    AuthModule,
    ],
 })
 export class AppModule {}

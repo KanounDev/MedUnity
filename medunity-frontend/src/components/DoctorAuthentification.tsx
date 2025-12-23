@@ -1,3 +1,4 @@
+// components/DoctorAuthentification.tsx (or .tsx)
 "use client";
 import React, { useState } from 'react';
 import styles from './DoctorAuthentification.module.css';
@@ -11,19 +12,43 @@ const HeartIcon = () => (
 );
 
 const DoctorAuthentification: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    if (username === 'admin@medunity.com') {
-      sessionStorage.setItem('isAdmin', 'true');
-      window.location.href = '/Administrator';
-    } else {
-      // Any other email → regular doctor
-      sessionStorage.setItem('isDoctor', 'true');
-      window.location.href = '/DoctorSpace'; // Redirect to new DoctorSpace
+    try {
+      const response = await fetch('http://localhost:3002/auth/login-doctor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Échec de la connexion');
+      }
+
+      // Successful login
+      if (data.role === 'admin') {
+        sessionStorage.setItem('isAdmin', 'true');
+        window.location.href = '/Administrator';
+      } else {
+        sessionStorage.setItem('isDoctor', 'true');
+        window.location.href = '/DoctorSpace';
+      }
+    } catch (err: any) {
+      setError(err.message || 'Identifiants incorrects');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,15 +61,16 @@ const DoctorAuthentification: React.FC = () => {
 
           <form onSubmit={handleSubmit} className={styles.loginForm}>
             <div className={styles.inputGroup}>
-              <label htmlFor="username">Email:</label>
+              <label htmlFor="email">Email:</label>
               <input
-                id="username"
+                id="email"
                 type="email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={styles.authInput}
                 required
                 placeholder="doctor@medunity.com"
+                disabled={loading}
               />
             </div>
 
@@ -57,11 +83,14 @@ const DoctorAuthentification: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.authInput}
                 required
+                disabled={loading}
               />
             </div>
 
-            <button type="submit" className={styles.connexionButton}>
-              Connexion
+            {error && <p className={styles.errorMessage}>{error}</p>}
+
+            <button type="submit" className={styles.connexionButton} disabled={loading}>
+              {loading ? 'Connexion en cours...' : 'Connexion'}
             </button>
           </form>
         </div>

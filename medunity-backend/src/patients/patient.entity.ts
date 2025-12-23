@@ -1,7 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// In src/patient/patient.entity.ts (add import + property)
+import { OneToMany } from 'typeorm';
+import { Exam } from '../exam/exam.entity';
+
 
 @Entity('patients')
 export class Patient {
+  @OneToMany(() => Exam, (exam) => exam.patient)
+  exams: Exam[];
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

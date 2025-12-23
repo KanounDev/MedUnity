@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Patient } from './patient.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class PatientService {
@@ -12,9 +13,16 @@ export class PatientService {
     private patientRepository: Repository<Patient>,
   ) {}
 
-  async create(dto: CreatePatientDto): Promise<Patient> {
-    const patient = this.patientRepository.create(dto);
-    return this.patientRepository.save(patient);
+  async create(createDto: CreatePatientDto): Promise<Patient> {
+     const patientData = { ...createDto };
+    
+        // Hash password if provided
+        if (patientData.password) {
+          patientData.password = await bcrypt.hash(patientData.password, 10);
+        }
+
+        const patient = this.patientRepository.create(patientData);
+        return this.patientRepository.save(patient);
   }
 
   findAll(): Promise<Patient[]> {
@@ -29,10 +37,22 @@ export class PatientService {
     return patient;
   }
 
-  async update(id: string, dto: UpdatePatientDto): Promise<Patient> {
-    await this.patientRepository.update(id, dto);
-    return this.findOne(id);
-  }
+  async update(id: string, updateDto: UpdatePatientDto): Promise<Patient> {
+      const updateData = { ...updateDto };
+  
+      // Only hash password if a new one is provided
+      if (updateData.password) {
+        updateData.password = await bcrypt.hash(updateData.password, 10);
+      }
+  
+      const result = await this.patientRepository.update(id, updateData);
+  
+      if (result.affected === 0) {
+        throw new NotFoundException('Patient non trouvé');
+      }
+  
+      return this.findOne(id);
+    }
 
   async remove(id: string): Promise<void> {
     const result = await this.patientRepository.delete(id);

@@ -16,4 +16,8 @@ export class CreatePatientDto {
   @IsString()
   @IsOptional()
   photo?: string;
+
+  @IsString()
+  @IsOptional()
+  password?: string;
 }

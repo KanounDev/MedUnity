@@ -29,4 +29,8 @@ export class CreateDoctorDto {
 
   @IsEmail()
   email: string;
+
+  @IsString()
+  @IsOptional()
+  password?: string;
 }

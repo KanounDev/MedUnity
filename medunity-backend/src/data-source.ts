@@ -5,7 +5,7 @@ import { Doctor } from './doctor/doctor.entity';
 import { Activity } from './activity/activity.entity';
 import { News } from './news/news.entity';
 import { Patient } from './patients/patient.entity';
-
+import { Exam } from './exam/exam.entity'; // ← Make sure this is imported
 dotenv.config();
 
 export const AppDataSource = new DataSource({
@@ -15,7 +15,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    entities: [ContactMessage, Doctor, Activity, News, Patient],
+    entities: [ContactMessage, Doctor, Activity, News, Patient, Exam],
     migrations: [__dirname + '/migrations/*.ts'],
     synchronize: false,
 });

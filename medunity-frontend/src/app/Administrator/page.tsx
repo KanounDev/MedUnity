@@ -80,18 +80,43 @@ export default function AdministratorPage() {
 
   // === SAVE DOCTOR (CREATE / UPDATE) ===
   const saveDoctor = async (data: Doctor) => {
-    const method = modal.edit ? 'PATCH' : 'POST';
-    const url = modal.edit ? `${API_URL}/doctors/${data.id}` : `${API_URL}/doctors`;
+    try {
+      // Prepare payload: clone data and conditionally remove password
+      const payload: Partial<Doctor> = { ...data };
 
-    await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+      // If password is empty or just whitespace, don't send it (especially on edit)
+      if (!payload.password || payload.password.trim() === '') {
+        delete payload.password;
+      }
 
-    const res = await fetch(`${API_URL}/doctors`);
-    setDoctors(await res.json());
-    closeModal();
+      const method = modal.edit ? 'PATCH' : 'POST';
+      const url = modal.edit
+        ? `${API_URL}/doctors/${data.id}`
+        : `${API_URL}/doctors`;
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to save doctor');
+      }
+
+      // Refresh the doctors list
+      const res = await fetch(`${API_URL}/doctors`);
+      if (!res.ok) throw new Error('Failed to reload doctors');
+
+      const updatedDoctors = await res.json();
+      setDoctors(updatedDoctors);
+
+      closeModal();
+    } catch (error: any) {
+      console.error('Error saving doctor:', error);
+      alert('Erreur lors de la sauvegarde : ' + error.message);
+    }
   };
 
   // === DELETE DOCTOR ===
@@ -142,18 +167,43 @@ export default function AdministratorPage() {
   };
   // === SAVE PATIENT ===
   const savePatient = async (data: Patient) => {
-    const method = modal.edit ? 'PATCH' : 'POST';
-    const url = modal.edit ? `${API_URL}/patients/${data.id}` : `${API_URL}/patients`;
+    try {
+      // Prepare payload: clone data and conditionally remove password
+      const payload: Partial<Patient> = { ...data };
 
-    await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+      // If password is empty or just whitespace, don't send it (especially on edit)
+      if (!payload.password || payload.password.trim() === '') {
+        delete payload.password;
+      }
 
-    const res = await fetch(`${API_URL}/patients`);
-    setPatients(await res.json());
-    closeModal();
+      const method = modal.edit ? 'PATCH' : 'POST';
+      const url = modal.edit
+        ? `${API_URL}/patients/${data.id}`
+        : `${API_URL}/patients`;
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to save doctor');
+      }
+
+      // Refresh the patients list
+      const res = await fetch(`${API_URL}/patients`);
+      if (!res.ok) throw new Error('Failed to reload patients');
+
+      const updatedPatients = await res.json();
+      setPatients(updatedPatients);
+
+      closeModal();
+    } catch (error: any) {
+      console.error('Error saving patient:', error);
+      alert('Erreur lors de la sauvegarde : ' + error.message);
+    }
   };
 
   // === DELETE PATIENT ===
@@ -241,6 +291,7 @@ export default function AdministratorPage() {
           onSave={saveDoctor}
         >
           {(data, set) => {
+
             const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               const file = e.target.files?.[0];
               if (file) {
@@ -248,7 +299,7 @@ export default function AdministratorPage() {
                 reader.onloadend = () => {
                   const result = reader.result as string;
                   setPhotoPreview(result);
-                  set({ photo: result }); // Save as base64
+                  set({ photo: result });
                 };
                 reader.readAsDataURL(file);
               }
@@ -258,50 +309,60 @@ export default function AdministratorPage() {
               <>
                 <input
                   className={styles.input}
-                  placeholder="Full Name"
+                  placeholder="Full Name *"
                   value={data.name ?? ''}
-                  onChange={e => set({ name: e.target.value })}
+                  onChange={(e) => set({ name: e.target.value })}
+                  required
                 />
 
                 <input
                   className={styles.input}
-                  placeholder="Title"
+                  placeholder="Title (optional)"
                   value={data.title ?? ''}
-                  onChange={e => set({ title: e.target.value })}
+                  onChange={(e) => set({ title: e.target.value })}
                 />
 
                 <input
                   className={styles.input}
-                  placeholder="Specialty"
+                  placeholder="Specialty *"
                   value={data.specialty ?? ''}
-                  onChange={e => set({ specialty: e.target.value })}
+                  onChange={(e) => set({ specialty: e.target.value })}
+                  required
                 />
 
                 <input
                   className={styles.input}
-                  placeholder="Email"
+                  placeholder="Email *"
+                  type="email"
                   value={data.email ?? ''}
-                  onChange={e => set({ email: e.target.value })}
+                  onChange={(e) => set({ email: e.target.value })}
+                  required
                 />
 
+                {/* Password field */}
                 <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
                   <input
                     className={styles.input}
-                    placeholder="Password"
+                    placeholder={
+                      modal.edit
+                        ? 'New password (leave empty to keep current)'
+                        : 'Password (auto-generated if empty)'
+                    }
                     type={showPassword ? 'text' : 'password'}
                     value={data.password ?? ''}
-                    onChange={e => set({ password: e.target.value })}
+                    onChange={(e) => set({ password: e.target.value })}
                     onFocus={() => {
-                      if (!data.password) {
+                      // Only auto-fill on add or if field is empty
+                      if (!modal.edit && !data.password) {
                         const randomPass = generateRandomPassword();
                         set({ password: randomPass });
                       }
                     }}
-                    style={{ paddingRight: '2.5rem' }} // space for the eye button
+                    style={{ paddingRight: '2.5rem' }}
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPassword(prev => !prev)}
+                    onClick={() => setShowPassword((prev) => !prev)}
                     style={{
                       position: 'absolute',
                       right: '0.5rem',
@@ -319,43 +380,52 @@ export default function AdministratorPage() {
                   </button>
                 </div>
 
-
+                {/* Optional hint for edit mode */}
+                {modal.edit && (
+                  <p style={{ fontSize: '0.85rem', color: '#666', margin: '0.5rem 0 1rem' }}>
+                    Leave the password field empty if you do not want to change it.
+                  </p>
+                )}
 
                 <textarea
                   className={styles.textarea}
-                  placeholder="Diplomats (one per line)"
+                  placeholder="Degrees (one per line)"
                   value={(data.degrees ?? []).join('\n')}
-                  onChange={e =>
+                  onChange={(e) =>
                     set({ degrees: e.target.value.split('\n').filter(Boolean) })
                   }
                   rows={4}
                 />
 
                 <input
-                  className={styles.textarea}
-                  placeholder="Experience"
+                  className={styles.input}
+                  placeholder="Experience (optional)"
                   value={data.experience ?? ''}
-                  onChange={e => set({ experience: e.target.value })}
+                  onChange={(e) => set({ experience: e.target.value })}
                 />
 
                 <textarea
                   className={styles.textarea}
-                  placeholder="Bio"
+                  placeholder="Bio (optional)"
                   value={data.bio ?? ''}
-                  onChange={e => set({ bio: e.target.value })}
+                  onChange={(e) => set({ bio: e.target.value })}
                   rows={3}
                 />
 
                 <div className={styles.photoUploadContainer}>
-                  <label className={styles.photoUploadLabel}>Doctor Image</label>
+                  <label className={styles.photoUploadLabel}>Doctor Photo</label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handlePhotoChange}
                     className={styles.photoFileInput}
                   />
-                  {data.photo && (
-                    <img src={data.photo} alt="Preview" className={styles.photoPreviewImg} />
+                  {(photoPreview || data.photo) && (
+                    <img
+                      src={photoPreview || data.photo}
+                      alt="Preview"
+                      className={styles.photoPreviewImg}
+                    />
                   )}
                 </div>
               </>
@@ -474,6 +544,52 @@ export default function AdministratorPage() {
               <>
                 <input className={styles.input} placeholder="Full Name" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} />
                 <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} />
+                <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
+                  <input
+                    className={styles.input}
+                    placeholder={
+                      modal.edit
+                        ? 'New password (leave empty to keep current)'
+                        : 'Password (auto-generated if empty)'
+                    }
+                    type={showPassword ? 'text' : 'password'}
+                    value={data.password ?? ''}
+                    onChange={(e) => set({ password: e.target.value })}
+                    onFocus={() => {
+                      // Only auto-fill on add or if field is empty
+                      if (!modal.edit && !data.password) {
+                        const randomPass = generateRandomPassword();
+                        set({ password: randomPass });
+                      }
+                    }}
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    style={{
+                      position: 'absolute',
+                      right: '0.5rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '1.1rem',
+                      color: '#555',
+                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? '🔓' : '🔒'}
+                  </button>
+                </div>
+
+                {/* Optional hint for edit mode */}
+                {modal.edit && (
+                  <p style={{ fontSize: '0.85rem', color: '#666', margin: '0.5rem 0 1rem' }}>
+                    Leave the password field empty if you do not want to change it.
+                  </p>
+                )}
                 <input className={styles.input} placeholder="Birth Date (ex: 1990-05-15)" value={data.birthDate ?? ''} onChange={e => set({ birthDate: e.target.value })} />
                 <input className={styles.input} placeholder="Phone Number" value={data.phone ?? ''} onChange={e => set({ phone: e.target.value })} />
 
