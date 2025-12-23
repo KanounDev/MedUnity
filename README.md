@@ -114,7 +114,15 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```bash
     npm run start:dev
     ```
-
+4. **Création des tableaux dans la base de données**
+   ```bash
+   Install ts-node:
+   npm install ts-node typescript -D
+   Run migration generation using ts-node:
+   npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/InitSchema -d src/data-source.ts
+   Run the migration:
+   npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source
+   ```
 ---
 
 ##  Sécurité
