@@ -1,0 +1,15 @@
+/* app/Administrator/ExamAssignment/page.css */
+
+
+/* Reuse and extend from ../../page.css */
+
+.adminPageContainer {
+    min-height: 100vh;
+}
+
+.adminPageMain {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1.5rem;
+}

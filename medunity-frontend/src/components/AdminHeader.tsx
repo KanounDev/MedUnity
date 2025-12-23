@@ -12,7 +12,9 @@ export default function AdminHeader() {
     sessionStorage.removeItem('isAdmin');
     router.push('/DoctorAuthentification');
   };
-
+  const handleManageExams = () => {
+    router.push('/Administrator/ExamAssignment');
+  };
   return (
     <header className={styles.header}>
       {/* Logo + Brand – exactly like public site */}
@@ -33,6 +35,10 @@ export default function AdminHeader() {
         <div className={styles.pageInfo}>
           <h2 className={styles.pageTitle}>Administrator Space</h2>
         </div>
+
+        <button onClick={handleManageExams} className={styles.examButton}>
+          Manage Exams
+        </button>
 
         <button onClick={handleLogout} className={styles.logoutButton}>
           Log Out

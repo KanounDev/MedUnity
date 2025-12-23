@@ -105,3 +105,34 @@
 .logoutButton:active {
     transform: translateY(-1px);
 }
+
+
+/* Update to components/AdminHeader.module.css (add styles for examButton) */
+
+
+/* ... existing styles ... */
+
+.examButton {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(20, 184, 166, 0.35);
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    /* Space from logout */
+}
+
+.examButton:hover {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(20, 184, 166, 0.45);
+}
+
+.examButton:active {
+    transform: translateY(-1px);
+}

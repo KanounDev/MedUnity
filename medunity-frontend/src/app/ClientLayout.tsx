@@ -29,7 +29,8 @@ export default function ClientLayout({
     pathname === '/DoctorAuthentification' ||
     pathname === '/Administrator' ||
     pathname === '/DoctorSpace' ||
-    pathname === '/PatientSpace';
+    pathname === '/PatientSpace' ||
+    pathname === '/Administrator/ExamAssignment';
 
   return (
     <QueryClientProvider client={queryClient}>

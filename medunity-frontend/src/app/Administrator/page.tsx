@@ -353,7 +353,7 @@ export default function AdministratorPage() {
                     onChange={(e) => set({ password: e.target.value })}
                     onFocus={() => {
                       // Only auto-fill on add or if field is empty
-                      if (!modal.edit && !data.password) {
+                      if (!data.password) {
                         const randomPass = generateRandomPassword();
                         set({ password: randomPass });
                       }
@@ -542,8 +542,8 @@ export default function AdministratorPage() {
 
             return (
               <>
-                <input className={styles.input} placeholder="Full Name" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} />
-                <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} />
+                <input className={styles.input} placeholder="Full Name" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} required/>
+                <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} required/>
                 <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
                   <input
                     className={styles.input}
@@ -557,13 +557,13 @@ export default function AdministratorPage() {
                     onChange={(e) => set({ password: e.target.value })}
                     onFocus={() => {
                       // Only auto-fill on add or if field is empty
-                      if (!modal.edit && !data.password) {
+                      if (!data.password) {
                         const randomPass = generateRandomPassword();
                         set({ password: randomPass });
                       }
                     }}
                     style={{ paddingRight: '2.5rem' }}
-                  />
+                  required/>
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}

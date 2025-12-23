@@ -32,3 +32,17 @@ title:string;
 description:string;
 image:string; // base64 or URL
 };
+// Add to src/types.ts (assuming you have a types file)
+export interface Exam {
+  id: string;
+  type: string;
+  date: string;
+  status: 'Pending' | 'In Progress' | 'Ready' | 'Completed';
+  fileUrl?: string;
+  doctorId: string;
+  patientId: string;
+  doctor?: Pick<Doctor, 'id' | 'name' | 'specialty'>;
+  patient?: Pick<Patient, 'id' | 'fullName'>;
+  createdAt: string;
+  updatedAt: string;
+}
