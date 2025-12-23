@@ -1,71 +1,98 @@
-import React from 'react';
-// Importation du module CSS
+// components/PatientSpace.tsx
+"use client";
+
+import { useState, useEffect } from 'react';
 import styles from './PatientSpace.module.css';
 import PatientSpaceHeader from './PatientSpaceHeader';
+import { API_BASE_URL } from '@/config/api';
+import { Exam } from '@/types'; // Use shared type
 
-// Interface pour le type de test
-interface Test {
-  id: number;
-  type: string;
-  date: string;
-  status: 'completed' | 'pending';
-}
+export default function PatientSpace() {
+  const [exams, setExams] = useState<Exam[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-// Les données fictives pour la liste
-const mockTests: Test[] = [
-  {
-    id: 1,
-    type: 'Ana-Path normal',
-    date: '21/12/2025',
-    status: 'completed',
-  },
-  {
-    id: 2,
-    type: 'Cytology',
-    date: '28/12/2025',
-    status: 'completed',
-  },
-];
+  useEffect(() => {
+    const fetchExams = async () => {
+      const patientId = sessionStorage.getItem('patientId');
 
-const PatientSpace: React.FC = () => {
+      if (!patientId) {
+        window.location.href = '/contact'; // Redirect to patient login
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/exams/patient/${patientId}`);
+        if (!response.ok) throw new Error('Failed to load exams');
+
+        const data: Exam[] = await response.json();
+        setExams(data);
+      } catch (err: any) {
+        setError('Impossible de charger les examens. Veuillez réessayer.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExams();
+  }, []);
+
   return (
     <div className={styles.patientPage}>
       <PatientSpaceHeader />
       <div className={styles.box}>
-      {/* Conteneur principal de la liste des tests */}
         <div className={styles.listContainer}>
-            <h2 className={styles.listHeader}>List of Tests</h2>
-            
-            {/* Carte des résultats */}
-            <div className={styles.testListCard}>
-            <table className={styles.testTable}>
+          <h2 className={styles.listHeader}>My Exam Results</h2>
+
+          <div className={styles.testListCard}>
+            {loading ? (
+              <p className={styles.loading}>Chargement des examens...</p>
+            ) : error ? (
+              <p className={styles.error}>{error}</p>
+            ) : exams.length === 0 ? (
+              <p>Aucun examen disponible pour le moment.</p>
+            ) : (
+              <table className={styles.testTable}>
                 <thead>
-                <tr>
+                  <tr>
                     <th>Type</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Download</th>
-                </tr>
+                  </tr>
                 </thead>
                 <tbody>
-                {mockTests.map((test) => (
-                    <tr key={test.id}>
-                    <td>{test.type}</td>
-                    <td>{test.date}</td>
-                    <td>{test.status}</td>
-                    <td>
-                        {/* Le bouton utilise une classe spécifique pour le style */}
-                        <button className={styles.downloadBtn}>PDF</button>
-                    </td>
+                  {exams.map((exam) => (
+                    <tr key={exam.id}>
+                      <td>{exam.type}</td>
+                      <td>{exam.date}</td>
+                      <td className={`${styles.status} ${styles[exam.status.toLowerCase().replace(' ', '')]}`}>
+                        {exam.status === 'Ready' || exam.status === 'Completed' ? 'Ready' : exam.status}
+                      </td>
+                      <td>
+                        {exam.status === 'Ready' && exam.fileUrl ? (
+                          <a
+                            href={`${API_BASE_URL}${exam.fileUrl}`}
+                            download
+                            className={styles.downloadBtn}
+                          >
+                            PDF
+                          </a>
+                        ) : (
+                          <button className={styles.downloadBtnDisabled} disabled>
+                            Not ready
+                          </button>
+                        )}
+                      </td>
                     </tr>
-                ))}
+                  ))}
                 </tbody>
-            </table>
-            </div>
+              </table>
+            )}
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   );
-};
-
-export default PatientSpace;
+}

@@ -11,7 +11,7 @@ export class ExamService {
   constructor(
     @InjectRepository(Exam)
     private examRepository: Repository<Exam>,
-  ) {}
+  ) { }
 
   async create(createDto: CreateExamDto): Promise<Exam> {
     const exam = this.examRepository.create(createDto);
@@ -61,5 +61,18 @@ export class ExamService {
       relations: ['patient'],
       order: { date: 'DESC' },
     });
+  }
+  async getExamsByDoctor(doctorId: string): Promise<Exam[]> {
+    const exams = await this.examRepository.find({
+      where: { doctorId },
+      relations: ['patient'], // Populate patient relation for fullName
+      order: { date: 'DESC' }, // Optional: Sort by date descending
+    });
+
+    if (!exams.length) {
+      throw new NotFoundException(`No exams found for doctor ID ${doctorId}`);
+    }
+
+    return exams;
   }
 }

@@ -2,16 +2,10 @@
 "use client";
 import React, { useState } from 'react';
 import styles from './PatientAuthentification.module.css';
-
-const HeartIcon = () => (
-  <div className={styles.heartIconContainer}>
-    <svg className={styles.heartIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#37678C" strokeWidth="1.5" fill="none" />
-    </svg>
-  </div>
-);
+import { useRouter } from 'next/navigation';
 
 const PatientAuthentification: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,9 +19,7 @@ const PatientAuthentification: React.FC = () => {
     try {
       const response = await fetch('http://localhost:3002/auth/login-patient', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
@@ -36,7 +28,10 @@ const PatientAuthentification: React.FC = () => {
       if (!response.ok) {
         throw new Error(data.message || 'Échec de la connexion');
       }
-      window.location.href = '/PatientSpace';
+
+      // Store patient ID and redirect
+      sessionStorage.setItem('patientId', data.id);
+      router.push('/PatientSpace'); // Better than window.location for Next.js
     } catch (err: any) {
       setError(err.message || 'Identifiants incorrects');
     } finally {

@@ -1,39 +1,55 @@
-// src/components/AdminHeader.tsx
-'use client';
+// components/PatientSpaceHeader.tsx (Similar for Patient)
+"use client";
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import styles from './AdminHeader.module.css';
+import Link from 'next/link';
+import styles from './AdminHeader.module.css'; // Can reuse Doctor's CSS or create separate
 
-export default function AdminHeader() {
+export default function PatientSpaceHeader() {
   const router = useRouter();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('isAdmin');
-    router.push('/PatientAuthentification');
+    sessionStorage.clear();
+    router.push('/');
   };
-
+  const handleHome = () => {
+    router.push('/PatientSpace');
+  };
   return (
     <header className={styles.header}>
-      {/* Logo + Brand – exactly like public site */}
-      <div className={styles.logoSection}>
-        <Image
-          src="/medunity.png"
-          alt="MedUnity Logo"
-          width={42}
-          height={42}
-          className={styles.logoImg}
-          priority
-        />
-        <span className={styles.logoText}>MedUnity</span>
-      </div>
-
-      {/* Right side */}
-      <div className={styles.rightSection}>
-        <div className={styles.pageInfo}>
-          <h2 className={styles.pageTitle}>Patient Space</h2>
+      <div className={styles.leftSection}>
+        <div className={styles.logoSection}>
+          <Image
+            src="/medunity.png"
+            alt="MedUnity Logo"
+            width={42}
+            height={42}
+            className={styles.logoImg}
+            priority
+          />
+          <span className={styles.logoText}>MedUnity</span>
         </div>
 
+        <Link href="/PatientProfile" className={styles.profileIconLink}>
+          <svg
+            className={styles.profileIcon}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="View Profile"
+          >
+            <circle cx="12" cy="8" r="4" stroke="#37678C" strokeWidth="1.5" />
+            <path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#37678C" strokeWidth="1.5" />
+          </svg>
+        </Link>
+      </div>
+
+      <div className={styles.rightSection}>
+        <h2 className={styles.pageTitle}>Patient Space</h2>
+        <button onClick={handleHome} className={styles.dashboardButton}>
+          Dashboard
+        </button>
         <button onClick={handleLogout} className={styles.logoutButton}>
           Log Out
         </button>

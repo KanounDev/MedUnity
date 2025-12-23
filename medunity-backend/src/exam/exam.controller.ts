@@ -20,8 +20,16 @@ import { UpdateExamDto } from './dto/update-exam.dto';
 
 @Controller('exams')
 export class ExamController {
-  constructor(private readonly examService: ExamService) {}
+  constructor(private readonly examService: ExamService) { }
+  @Get('doctor/:doctorId')
+  async getExamsByDoctor(@Param('doctorId') doctorId: string) {
+    return this.examService.getExamsByDoctor(doctorId);
+  }
 
+  @Get('patient/:patientId')
+  async getExamsByPatient(@Param('patientId') patientId: string) {
+    return this.examService.findByPatient(patientId);
+  }
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {

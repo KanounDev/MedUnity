@@ -10,10 +10,13 @@ export default function AdminHeader() {
 
   const handleLogout = () => {
     sessionStorage.removeItem('isAdmin');
-    router.push('/DoctorAuthentification');
+    router.push('/');
   };
   const handleManageExams = () => {
     router.push('/Administrator/ExamAssignment');
+  };
+  const handleDashboard = () => {
+    router.push('/Administrator');
   };
   return (
     <header className={styles.header}>
@@ -38,6 +41,9 @@ export default function AdminHeader() {
 
         <button onClick={handleManageExams} className={styles.examButton}>
           Manage Exams
+        </button>
+        <button onClick={handleDashboard} className={styles.dashboardButton}>
+          Dashboard
         </button>
 
         <button onClick={handleLogout} className={styles.logoutButton}>

@@ -9,7 +9,7 @@ class LoginDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('login-doctor')
   async loginDoctor(@Body() loginDto: LoginDto) {
@@ -21,9 +21,13 @@ export class AuthController {
 
     return {
       role: result.role, // 'doctor' or 'admin'
+      id: result.id,     // Include ID for doctors (undefined for admin)
       message: 'Connexion réussie',
     };
   }
+
+  // src/auth/auth.controller.ts
+
   @Post('login-patient')
   async loginPatient(@Body() loginDto: LoginDto) {
     const result = await this.authService.validatePatient(loginDto.email, loginDto.password);
@@ -33,6 +37,7 @@ export class AuthController {
     }
 
     return {
+      id: result.id,                    // ← Return the patient ID
       message: 'Connexion réussie',
     };
   }

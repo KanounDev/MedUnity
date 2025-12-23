@@ -1,5 +1,11 @@
 /* src/components/AdminHeader.module.css */
 
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -135,4 +141,65 @@
 
 .examButton:active {
     transform: translateY(-1px);
+}
+
+.dashboardButton {
+    background: linear-gradient(135deg, #90e8de, #367894);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(17, 118, 162, 0.35);
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    /* Space from logout */
+}
+
+.dashboardButton:hover {
+    background: linear-gradient(135deg, #0d7b94, #0f4b76);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(20, 129, 184, 0.45);
+}
+
+.dashboardButton:active {
+    transform: translateY(-1px);
+}
+
+
+/* Add to AdminHeader.module.css (or wherever styles are defined for headers) */
+
+.profileButton {
+    background-color: #37678C;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.profileButton:hover {
+    background-color: #1F3F59;
+}
+
+.profileIconLink {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.profileIconLink:hover {
+    transform: scale(1.1);
+}
+
+.profileIcon {
+    width: 40px;
+    height: 40px;
+    stroke: #37678C;
+    cursor: pointer;
 }

@@ -1,7 +1,8 @@
-// components/DoctorAuthentification.tsx (or .tsx)
+// components/DoctorAuthentification.tsx
 "use client";
 import React, { useState } from 'react';
 import styles from './DoctorAuthentification.module.css';
+import { useRouter } from 'next/navigation';
 
 const HeartIcon = () => (
   <div className={styles.heartIconContainer}>
@@ -12,6 +13,7 @@ const HeartIcon = () => (
 );
 
 const DoctorAuthentification: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,10 +42,11 @@ const DoctorAuthentification: React.FC = () => {
       // Successful login
       if (data.role === 'admin') {
         sessionStorage.setItem('isAdmin', 'true');
-        window.location.href = '/Administrator';
+        router.push('/Administrator');
       } else {
         sessionStorage.setItem('isDoctor', 'true');
-        window.location.href = '/DoctorSpace';
+        sessionStorage.setItem('doctorId', data.id); // Store doctorId here
+        router.push('/DoctorSpace');
       }
     } catch (err: any) {
       setError(err.message || 'Identifiants incorrects');

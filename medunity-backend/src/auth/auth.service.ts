@@ -11,11 +11,11 @@ export class AuthService {
   constructor(
     @InjectRepository(Doctor)
     private doctorRepository: Repository<Doctor>,
-    @InjectRepository(Patient) // Fix: Inject Patient repository
+    @InjectRepository(Patient)
     private patientRepository: Repository<Patient>,
-  ) {}
+  ) { }
 
-  async validateDoctor(email: string, password: string): Promise<{ allowed: boolean; role: 'doctor' | 'admin' }> {
+  async validateDoctor(email: string, password: string): Promise<{ allowed: boolean; role: 'doctor' | 'admin'; id?: string }> {
     // Special case: admin bypass
     if (email.toLowerCase() === 'admin@medunity.com') {
       return { allowed: true, role: 'admin' };
@@ -37,26 +37,27 @@ export class AuthService {
       return { allowed: false, role: 'doctor' };
     }
 
-    return { allowed: true, role: 'doctor' };
+    return { allowed: true, role: 'doctor', id: doctor.id };
   }
-  async validatePatient(email: string, password: string): Promise<{ allowed: boolean}> {
 
-    // Regular doctor: check in database
+  // src/auth/auth.service.ts
+
+  async validatePatient(email: string, password: string): Promise<{ allowed: boolean; id?: string }> {
     const patient = await this.patientRepository.findOne({
       where: { email: email.toLowerCase() },
-      select: ['id', 'password'], // Only fetch password for comparison
+      select: ['id', 'password'],
     });
 
     if (!patient || !patient.password) {
-      return { allowed: false};
+      return { allowed: false };
     }
 
     const isPasswordValid = await bcrypt.compare(password, patient.password);
 
     if (!isPasswordValid) {
-      return { allowed: false};
+      return { allowed: false };
     }
 
-    return { allowed: true};
+    return { allowed: true, id: patient.id }; // ← Add id here
   }
 }

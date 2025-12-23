@@ -1,0 +1,105 @@
+/* components/DoctorSpaceHeader.module.css (New file) */
+
+
+/* Reuse similar styles from existing headers, e.g., background, colors */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logoImg {
+    border-radius: 8px;
+}
+
+.logoText {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #37678C;
+    letter-spacing: -0.5px;
+}
+
+.profileIconLink {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.profileIconLink:hover {
+    transform: scale(1.1);
+}
+
+.profileIcon {
+    width: 40px;
+    height: 40px;
+    stroke: #37678C;
+    cursor: pointer;
+}
+
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.pageTitle {
+    font-size: 1.6rem;
+    color: #37678C;
+    font-weight: 700;
+}
+
+.logoutButton {
+    background: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.logoutButton:hover {
+    background: #c82333;
+}
+
+.dashboardButton {
+    background: linear-gradient(135deg, #90e8de, #367894);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(17, 118, 162, 0.35);
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    /* Space from logout */
+}
+
+.dashboardButton:hover {
+    background: linear-gradient(135deg, #0d7b94, #0f4b76);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(20, 129, 184, 0.45);
+}
+
+.dashboardButton:active {
+    transform: translateY(-1px);
+}

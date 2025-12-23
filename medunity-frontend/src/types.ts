@@ -13,11 +13,11 @@ export type Doctor = {
 export type Patient = {
   id: string;
   fullName: string;
-  email: string;
-  password: string;
-  birthDate: string;
-  phone: string;
-  photo: string;
+  email?: string;
+  password?: string;
+  birthDate?: string;
+  phone?: string;
+  photo?: string;
 }
 export type News = {
   id: string;

@@ -1,0 +1,107 @@
+/* components/Profile.module.css */
+
+
+/* Inspired by AdminSection.module.css and PatientAuthentification.module.css for consistency */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #37678C;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 1rem;
+    object-fit: cover;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #37678C;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+.toggleGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.toggleButton {
+    background: #37678C;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.updateButton {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.errorMessage {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.successMessage {
+    color: #28a745;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}

@@ -1,42 +1,59 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DoctorSpaceHeader from './DoctorSpaceHeader';
 import styles from './DoctorSpace.module.css';
-
-type Exam = {
-  type: string;
-  date: string;
-  status: 'Ready' | 'In Progress' | 'Pending';
-  fileUrl?: string;
-};
-
-type Patient = {
-  id: number;
-  name: string;
-};
-
-const patients: Patient[] = [
-  { id: 1, name: 'Durand, Marie' },
-  { id: 2, name: 'Lefèvre, Paul' },
-  { id: 3, name: 'Garcia, Sofia' },
-  { id: 4, name: 'Dubois, Claire' },
-  { id: 5, name: 'Leroy, Thomas' },
-  { id: 6, name: 'Petit, Julie' },
-  { id: 7, name: 'Roux, Antoine' },
-];
-
-const exams: Record<number, Exam[]> = {
-  1: [
-    { type: 'Radiography Chest', date: '2024-03-10', status: 'Ready', fileUrl: '/files/radiography.pdf' },
-    { type: 'Blood Test Complete', date: '2024-03-05', status: 'Ready', fileUrl: '/files/blood-test.pdf' },
-    { type: 'Echography Abdomen', date: '2024-03-01', status: 'In Progress' },
-    { type: 'MRI Brain', date: '2024-03-12', status: 'Pending' },
-  ],
-};
+import { API_BASE_URL } from '@/config/api';
+import { Exam, Patient } from '@/types'; // Adjust path to your types.ts (e.g., '@/types' if in src/types.ts)
 
 export default function DoctorSpace() {
-  const [selectedPatient, setSelectedPatient] = useState<number | null>(null);
+  const [selectedPatient, setSelectedPatient] = useState<string | null>(null);
+  const [patients, setPatients] = useState<Pick<Patient, 'id' | 'fullName'>[]>([]); // Use subset of Patient type
+  const [groupedExams, setGroupedExams] = useState<Record<string, Exam[]>>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const doctorId = sessionStorage.getItem('doctorId');
+        if (!doctorId) {
+          // Use router for redirect (import useRouter if needed)
+          const router = (await import('next/navigation')).useRouter();
+          router.push('/contact'); // Correct path to login page
+          return;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/exams/doctor/${doctorId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch exams');
+        }
+        const exams: Exam[] = await response.json();
+
+        // Group exams by patientId
+        const grouped = exams.reduce((acc: Record<string, Exam[]>, exam) => {
+          const patientId = exam.patientId;
+          if (!acc[patientId]) {
+            acc[patientId] = [];
+          }
+          acc[patientId].push(exam);
+          return acc;
+        }, {});
+
+        // Derive patients from grouped exams
+        const derivedPatients = Object.keys(grouped).map((patientId) => ({
+          id: patientId,
+          fullName: grouped[patientId][0].patient?.fullName || 'Unknown', // Safe access
+        }));
+
+        setGroupedExams(grouped);
+        setPatients(derivedPatients);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Optional: Show user-friendly error message
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -58,18 +75,17 @@ export default function DoctorSpace() {
                     selectedPatient === patient.id ? styles.selected : ''
                   }`}
                 >
-                  {patient.name}
+                  {patient.fullName}
                 </li>
               ))}
             </ul>
           </aside>
-
           {/* Exam info zone inside main block */}
           <main className={styles.examInfo}>
             {selectedPatient ? (
               <div>
                 <h2 className={styles.examTitle}>
-                  Exams for {patients.find((p) => p.id === selectedPatient)?.name}
+                  Exams for {patients.find((p) => p.id === selectedPatient)?.fullName}
                 </h2>
                 <table className={styles.table}>
                   <thead>
@@ -81,7 +97,7 @@ export default function DoctorSpace() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(exams[selectedPatient] || []).map((exam, index) => (
+                    {(groupedExams[selectedPatient] || []).map((exam, index) => (
                       <tr key={index}>
                         <td>{exam.type}</td>
                         <td>{exam.date}</td>
@@ -90,7 +106,7 @@ export default function DoctorSpace() {
                         </td>
                         <td>
                           {exam.status === 'Ready' && exam.fileUrl ? (
-                            <a href={exam.fileUrl} download className={styles.downloadBtn}>
+                            <a href={`${API_BASE_URL}${exam.fileUrl}`} download className={styles.downloadBtn}>
                               Download
                             </a>
                           ) : (
