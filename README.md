@@ -83,9 +83,9 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ### 1. Frontend (Next.js)
 
-1.  **Création du projet**
+1.  **Clone the repository**
     ```bash
-    npx create-next-app@latest medunity-frontend --typescript
+    git clone <repo-url>
     ```
 2.  **Accéder au dossier du projet**
     ```bash
