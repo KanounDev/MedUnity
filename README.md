@@ -83,9 +83,9 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ### 1. Frontend (Next.js)
 
-1.  **Clone the repository**
+1.  **Cloner le dépôt**
     ```bash
-    git clone <repo-url>
+    git clone https://github.com/KanounDev/MedUnity.git
     ```
 2.  **Accéder au dossier du projet**
     ```bash
@@ -93,7 +93,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```
 3.  **Installation des dépendances**
     ```bash
-    npm i @heroicons/react lucide-react @headlessui/react @tanstack/react-query react-hot-toast
+    npm install
     ```
 4.  **Démarrer le serveur de développement**
     ```bash
@@ -116,8 +116,6 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```
 4. **Création des tableaux dans la base de données**
    ```bash
-   Install ts-node:
-   npm install ts-node typescript -D
    Run migration generation using ts-node:
    npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/InitSchema -d src/data-source.ts
    Run the migration:
