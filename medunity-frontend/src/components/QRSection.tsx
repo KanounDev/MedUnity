@@ -21,7 +21,7 @@ export default function QRSection() {
     if (!question.trim()) return;
 
     setIsLoading(true);
-    setAnswer("En attente de la réponse de l'IA...");
+    setAnswer("Waiting for the AI response...");
 
     try {
       const response = await fetch(BACKEND_URL, {
@@ -37,7 +37,7 @@ export default function QRSection() {
     } catch (error) {
       console.error(error);
       setAnswer(
-        "Désolé, il y a eu un problème de connexion avec le service Q&R. Veuillez réessayer."
+        "We apologize, there was a problem with the Q&R service. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -53,68 +53,86 @@ export default function QRSection() {
   return (
     <>
       <section className={styles.container}>
-        <h1 className={styles.title}>Questions – Réponses</h1>
+        <h1 className={styles.title}>Frequently Asked Questions</h1>
         <p className={styles.subtitle}>
-          Posez vos questions sur l’anatomie pathologique, nos services, ou notre institut.
+          Find answers to common questions about our clinic, services, and your secure patient portal.
         </p>
 
         <div className={styles.faqList}>
           <details className={styles.faqItem}>
-            <summary>Qu’est-ce que l’anatomie-pathologique ?</summary>
+            <summary>How can I access my medical exams and results?</summary>
             <p>
-              L’anatomie-pathologique est une discipline médicale méconnue du grand public.
-              Elle est pratiquée par un médecin spécialiste en anatomie et cytologie pathologiques,
-              appelé « anatomo-pathologiste » ou « pathologiste ». Il exerce sa spécialité sur des
-              prélèvements réalisés par votre médecin. L’examen au microscope permet de proposer un
-              diagnostic précis.
+              Registered patients can securely log in to their personal portal on MedUnity.
+              There, you can view your consultation history, download exam results (blood tests, X-rays, MRIs, etc.),
+              and check the status of ongoing exams (Pending, In Progress, Ready, or Completed).
+              Your data is fully protected and confidential.
             </p>
           </details>
 
           <details className={styles.faqItem}>
-            <summary>Pourquoi votre spécialité est-elle aussi peu connue du grand public ?</summary>
+            <summary>What specialties do you offer at MedUnity?</summary>
             <p>
-              Nous ne sommes pas en contact direct avec les patients, mais avec les médecins
-              correspondants qui nous sollicitent pour l’analyse des prélèvements.
+              We provide comprehensive care across multiple specialties, including Cardiology, Pediatrics,
+              Neurology, Radiology, and General Medicine. Our experienced doctors collaborate to offer
+              personalized treatment plans for all ages.
             </p>
           </details>
 
           <details className={styles.faqItem}>
-            <summary>Êtes-vous un laboratoire de biologie médicale ?</summary>
+            <summary>How do I book an appointment or contact the clinic?</summary>
             <p>
-              Non, nous sommes un cabinet de Médecins spécialistes. Les laboratoires de biologie
-              médicale réalisent des analyses biochimiques (sang, urine, etc.). Notre domaine
-              concerne l’analyse tissulaire et cellulaire.
+              You can use the contact form on our website to send a message, request an appointment,
+              or ask general questions. Our administrative team will respond promptly.
+              For urgent matters, please call us directly during opening hours.
+            </p>
+          </details>
+
+          <details className={styles.faqItem}>
+            <summary>Is my personal and medical information secure?</summary>
+            <p>
+              Yes, absolutely. MedUnity uses secure authentication (JWT) and restricted access based on user roles
+              (patient, doctor, administrator). Only you and authorized medical staff can view your records.
+              We prioritize data privacy and compliance with health regulations.
+            </p>
+          </details>
+
+          <details className={styles.faqItem}>
+            <summary>Can I share my results with another doctor?</summary>
+            <p>
+              Yes! From your patient portal, you can download PDF reports and share them securely with
+              any healthcare professional. Our collaborative tools also allow doctors to exchange information
+              when needed for your care.
             </p>
           </details>
         </div>
       </section>
 
-      {/* FAB BUTTON – NOW PERFECTLY VISIBLE & STYLED */}
+      {/* FAB BUTTON – Ask a question */}
       <button
         onClick={() => {
           setIsModalOpen(true);
           setAnswer("");
         }}
-        className={styles.fabButton}   // ← This was the missing fix!
-        aria-label="Poser une question"
+        className={styles.fabButton}
+        aria-label="Ask a question"
       >
         +
       </button>
 
-      {/* Modal – unchanged */}
+      {/* Modal – Updated to English */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={closeModal}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h2 className={styles.modalTitle}>Poser une question à l'IA MedUnity</h2>
-              <button onClick={closeModal} className={styles.modalCloseBtn} aria-label="Fermer">
+              <h2 className={styles.modalTitle}>Ask MedUnity AI a Question</h2>
+              <button onClick={closeModal} className={styles.modalCloseBtn} aria-label="Close">
                 ×
               </button>
             </div>
 
             <form className={styles.modalForm} onSubmit={handleSubmit}>
               <textarea
-                placeholder="Écrivez votre question ici, par exemple : Quel est le rôle de l'Admin ?"
+                placeholder="Type your question here, e.g., How do I download my exam results?"
                 rows={5}
                 className={styles.modalTextarea}
                 required
@@ -126,13 +144,13 @@ export default function QRSection() {
                 disabled={isLoading}
               />
               <button type="submit" className={styles.modalSubmitBtn} disabled={isLoading}>
-                {isLoading ? "Envoi en cours..." : "Envoyer"}
+                {isLoading ? "Sending..." : "Send"}
               </button>
             </form>
 
             {answer && (
               <div className={styles.aiResponseBox}>
-                <h3>Réponse de l’IA MedUnity :</h3>
+                <h3>MedUnity AI Response:</h3>
                 <p>{answer}</p>
               </div>
             )}

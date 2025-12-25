@@ -24,6 +24,7 @@ export type News = {
   title: string;
   date: string;        // e.g. "Novembre 2025"
   content: string;
+  paragraphs?: string[]; // optional paragraphs (when API provides structured paragraphs)
   image: string;       // base64 or URL
 };
 export type Activity = {

@@ -64,11 +64,29 @@
     color: #334155;
     line-height: 1.7;
     font-size: 1.05rem;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0 0 0.8rem 0;
+    /* space below each paragraph */
+    /* Preserve single newlines and wrap long words at container edge */
+    white-space: pre-wrap;
+    /* keeps \n as line breaks and allows wrapping */
+    overflow-wrap: anywhere;
+    /* break long words if needed */
+    word-break: break-word;
+    /* fallback */
+}
+
+
+/* Ensure a visible gap between consecutive paragraphs inside the text block */
+
+.textContent p+p {
+    margin-top: 1rem;
+}
+
+
+/* Avoid extra margin after the last paragraph */
+
+.textContent p:last-child {
+    margin-bottom: 0;
 }
 
 .actions {

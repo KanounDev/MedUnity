@@ -41,6 +41,14 @@
     max-width: 700px;
 }
 
+
+/* Preserve new lines inside paragraphs and ensure long words wrap */
+
+.text p {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
 .divider {
     width: 400px;
     height: 3px;

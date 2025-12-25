@@ -48,7 +48,14 @@ export default function AdministratorPage() {
 
         if (docRes.ok) setDoctors(await docRes.json());
         if (actRes.ok) setActivities(await actRes.json());
-        if (newsRes.ok) setNews(await newsRes.json());
+        if (newsRes.ok) {
+          const newsData = await newsRes.json();
+          const mapped = newsData.map((n: any) => ({
+            ...n,
+            content: n.paragraphs ? n.paragraphs.join('\n\n') : n.content || ''
+          }));
+          setNews(mapped);
+        }
         if (patRes.ok) setPatients(await patRes.json());
       } catch (err) {
         console.error('Failed to fetch data', err);
@@ -66,7 +73,13 @@ export default function AdministratorPage() {
 
   // === MODAL HELPERS ===
   const openAdd = (type: typeof modal.type) => setModal({ open: true, type });
-  const openEdit = (type: typeof modal.type, item: any) => setModal({ open: true, type, edit: item });
+  const openEdit = (type: typeof modal.type, item: any) => {
+    // For news items, ensure we provide a `content` string for the textarea (join paragraphs if present)
+    const normalized = type === 'news' && item
+      ? { ...item, content: item.paragraphs ? item.paragraphs.join('\n\n') : item.content ?? '' }
+      : item;
+    setModal({ open: true, type, edit: normalized });
+  };
   const closeModal = () => setModal({ open: false, type: 'doctor' });
   // Generates a random 12-character password
   const generateRandomPassword = (length = 12) => {
@@ -149,10 +162,16 @@ export default function AdministratorPage() {
     const method = modal.edit ? 'PATCH' : 'POST';
     const url = modal.edit ? `${API_URL}/news/${data.id}` : `${API_URL}/news`;
 
+    // Ensure we also send a `paragraphs` array derived from the textarea content
+    const payload: Partial<News> = {
+      ...data,
+      paragraphs: data.content ? data.content.split(/\r?\n\s*\r?\n/).map(p => p.trim()).filter(Boolean) : []
+    };
+
     await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
 
     const res = await fetch(`${API_URL}/news`);
@@ -380,12 +399,7 @@ export default function AdministratorPage() {
                   </button>
                 </div>
 
-                {/* Optional hint for edit mode */}
-                {modal.edit && (
-                  <p style={{ fontSize: '0.85rem', color: '#666', margin: '0.5rem 0 1rem' }}>
-                    Leave the password field empty if you do not want to change it.
-                  </p>
-                )}
+
 
                 <textarea
                   className={styles.textarea}
@@ -542,8 +556,8 @@ export default function AdministratorPage() {
 
             return (
               <>
-                <input className={styles.input} placeholder="Full Name" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} required/>
-                <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} required/>
+                <input className={styles.input} placeholder="Full Name" value={data.fullName ?? ''} onChange={e => set({ fullName: e.target.value })} required />
+                <input className={styles.input} placeholder="Email" value={data.email ?? ''} onChange={e => set({ email: e.target.value })} required />
                 <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
                   <input
                     className={styles.input}
@@ -563,7 +577,7 @@ export default function AdministratorPage() {
                       }
                     }}
                     style={{ paddingRight: '2.5rem' }}
-                  required/>
+                    required />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
@@ -584,12 +598,6 @@ export default function AdministratorPage() {
                   </button>
                 </div>
 
-                {/* Optional hint for edit mode */}
-                {modal.edit && (
-                  <p style={{ fontSize: '0.85rem', color: '#666', margin: '0.5rem 0 1rem' }}>
-                    Leave the password field empty if you do not want to change it.
-                  </p>
-                )}
                 <input className={styles.input} placeholder="Birth Date (ex: 1990-05-15)" value={data.birthDate ?? ''} onChange={e => set({ birthDate: e.target.value })} />
                 <input className={styles.input} placeholder="Phone Number" value={data.phone ?? ''} onChange={e => set({ phone: e.target.value })} />
 

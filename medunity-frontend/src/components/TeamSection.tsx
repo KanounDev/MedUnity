@@ -20,7 +20,7 @@ export default function TeamSection() {
     const fetchDoctors = async () => {
       try {
         const res = await fetch(`${API_URL}/doctors`);
-        if (!res.ok) throw new Error("Impossible de charger les médecins");
+        if (!res.ok) throw new Error("Unable to load doctors");
         const data = await res.json();
 
         // Map backend fields → frontend expected fields
@@ -32,13 +32,13 @@ export default function TeamSection() {
           degrees: d.degrees || [],
           experience: d.experience || "",
           photo: d.photo || "/placeholder-doctor.jpg", // fallback image
-          bio: d.bio || "Médecin pathologiste expérimenté.",
+          bio: d.bio || "Experienced pathologist.",
           email: d.email,
         }));
 
         setDoctors(mappedDoctors);
       } catch (err) {
-        setError("Erreur lors du chargement de l'équipe");
+        setError("Error loading the medical team");
         console.error(err);
       } finally {
         setLoading(false);
@@ -51,7 +51,7 @@ export default function TeamSection() {
   if (loading) {
     return (
       <section className={styles.container}>
-        <p className="text-center py-20 text-gray-600">Chargement de l'équipe médicale...</p>
+        <p className="text-center py-20 text-gray-600">Loading the medical team...</p>
       </section>
     );
   }
@@ -67,33 +67,33 @@ export default function TeamSection() {
   return (
     <>
       <section className={styles.container}>
-        <h1 className={styles.title}>Une Équipe de Médecins Passionnés</h1>
+        <h1 className={styles.title}>A Team of Passionate Doctors</h1>
         <p className={styles.subtitle}>
-          {doctors.length} médecin(s) pathologiste(s) à votre service, formés dans les plus grands établissements
+          {doctors.length} doctor(s) at your service, trained in the top institutions
         </p>
 
         {/* Banners */}
         <div className={styles.banners}>
           <div className={styles.banner}>
-            <Image src="/banners/1.png" alt="Disponibilité" width={300} height={110} />
-            <p>Toujours disponibles pour écouter et expliquer</p>
+            <Image src="/banners/1.png" alt="Availability" width={300} height={110} />
+            <p>Always available to listen and explain</p>
           </div>
           <div className={styles.banner}>
             <Image src="/banners/2.png" alt="Conventions" width={300} height={110} />
-            <p>Conventions : secteur 1, tiers payant, chèques</p>
+            <p>Conventions: sector 1, direct billing, checks</p>
           </div>
           <div className={styles.banner}>
-            <Image src="/banners/3.png" alt="Qualité" width={300} height={110} />
-            <p>Qualité en Anatomie et Cytologie Pathologiques</p>
+            <Image src="/banners/3.png" alt="Quality" width={300} height={110} />
+            <p>Quality in Anatomical and Cytological Pathology</p>
           </div>
           <div className={styles.banner}>
-            <Image src="/banners/4.png" alt="Formation" width={300} height={110} />
-            <p>Formés dans les grands établissements</p>
+            <Image src="/banners/4.png" alt="Training" width={300} height={110} />
+            <p>Trained in top institutions</p>
           </div>
         </div>
 
         <div className={styles.count}>
-          <h2>{doctors.length} MÉDECINS PATHOLOGISTES</h2>
+          <h2>{doctors.length} DOCTOR(S)</h2>
         </div>
 
         <hr className={styles.divider} />
@@ -101,7 +101,7 @@ export default function TeamSection() {
         {/* Doctor Grid */}
         {doctors.length === 0 ? (
           <p className="text-center py-16 text-gray-500">
-            Aucun médecin n'a encore été ajouté.
+            No doctors have been added yet.
           </p>
         ) : (
           <div className={styles.grid}>

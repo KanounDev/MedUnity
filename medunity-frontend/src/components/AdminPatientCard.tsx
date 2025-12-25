@@ -35,8 +35,8 @@ export default function AdminPatientCard({ patient, onEdit, onDelete }: Props) {
         </div>
         <div className={styles.details}>
           <h4 className={styles.name}>{patient.fullName}</h4>
-          <p>Né(e) le : {formatDate(patient.birthDate)}</p>
-          <p>Téléphone : {patient.phone}</p>
+          <p>Born on : {formatDate(patient.birthDate)}</p>
+          <p>Phone : {patient.phone}</p>
           <p>Email : {patient.email}</p>
         </div>
       </div>

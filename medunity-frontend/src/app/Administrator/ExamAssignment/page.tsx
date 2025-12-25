@@ -128,7 +128,7 @@ export default function ExamAssignmentPage() {
                     <div className={localStyles.searchWrapper}>
                         <input
                             type="text"
-                            placeholder="Rechercher par type d'examen..."
+                            placeholder="Search by exam type..."
                             value={searchType}
                             onChange={(e) => setSearchType(e.target.value)}
                             className={localStyles.searchInput}
@@ -139,7 +139,7 @@ export default function ExamAssignmentPage() {
                     <div className={localStyles.searchWrapper}>
                         <input
                             type="text"
-                            placeholder="Rechercher par nom du médecin..."
+                            placeholder="Search by doctor name..."
                             value={searchDoctor}
                             onChange={(e) => setSearchDoctor(e.target.value)}
                             className={localStyles.searchInput}
@@ -150,7 +150,7 @@ export default function ExamAssignmentPage() {
                     <div className={localStyles.searchWrapper}>
                         <input
                             type="text"
-                            placeholder="Rechercher par nom du patient..."
+                            placeholder="Search by patient name..."
                             value={searchPatient}
                             onChange={(e) => setSearchPatient(e.target.value)}
                             className={localStyles.searchInput}
@@ -158,7 +158,7 @@ export default function ExamAssignmentPage() {
                         <div className={localStyles.searchIcon}>🔍</div>
                     </div>
                 </div>
-                <AdminSection title="Gestion des Examens" onAdd={() => openModal()}>
+                <AdminSection title="Exams Management" onAdd={() => openModal()}>
                     {(() => {
                         const filteredExams = exams.filter((exam) => {
                             const typeMatch = searchType === '' || exam.type.toLowerCase().includes(searchType.toLowerCase());
@@ -201,7 +201,7 @@ export default function ExamAssignmentPage() {
                 <AddEditModal<ExamFormData>
                     isOpen={modal.open}
                     onClose={closeModal}
-                    title={modal.edit ? 'Modifier Examen' : 'Assigner un Examen'}
+                    title={modal.edit ? 'Modify an Exam' : 'Assign an Exam'}
                     initial={modal.edit ? {
                         type: modal.edit.type,
                         date: modal.edit.date,
@@ -230,7 +230,7 @@ export default function ExamAssignmentPage() {
                             <>
                                 <input
                                     className={styles.input}
-                                    placeholder="Type d'examen *"
+                                    placeholder="Exam Type *"
                                     value={data.type}
                                     onChange={(e) => set({ type: e.target.value })}
                                     required
@@ -250,9 +250,9 @@ export default function ExamAssignmentPage() {
                                     onChange={(e) => set({ status: e.target.value as ExamFormData['status'] })}
                                 >
                                     <option value="Pending">Pending</option>
-                                    <option value="In Progress">En cours</option>
-                                    <option value="Ready">Prêt</option>
-                                    <option value="Completed">Terminé</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Ready">Ready</option>
+                                    <option value="Completed">Completed</option>
                                 </select>
 
                                 <select
@@ -261,7 +261,7 @@ export default function ExamAssignmentPage() {
                                     onChange={(e) => set({ doctorId: e.target.value })}
                                     required
                                 >
-                                    <option value="">Sélectionner un médecin</option>
+                                    <option value="">Select a doctor</option>
                                     {doctors.map((doc) => (
                                         <option key={doc.id} value={doc.id}>
                                             {doc.name} ({doc.specialty})
@@ -275,7 +275,7 @@ export default function ExamAssignmentPage() {
                                     onChange={(e) => set({ patientId: e.target.value })}
                                     required
                                 >
-                                    <option value="">Sélectionner un patient</option>
+                                    <option value="">Select a patient</option>
                                     {patients.map((pat) => (
                                         <option key={pat.id} value={pat.id}>
                                             {pat.fullName}
@@ -285,7 +285,7 @@ export default function ExamAssignmentPage() {
 
                                 <div className={styles.photoUploadContainer}>
                                     <label className={styles.photoUploadLabel}>
-                                        Résultat PDF (optionnel)
+                                        PDF Result (optional)
                                     </label>
                                     <input
                                         type="file"
@@ -300,7 +300,7 @@ export default function ExamAssignmentPage() {
                                             rel="noopener noreferrer"
                                             style={{ display: 'block', marginTop: '0.5rem', color: '#14b8a6' }}
                                         >
-                                            Voir le PDF actuel
+                                            View the current PDF
                                         </a>
                                     )}
                                 </div>

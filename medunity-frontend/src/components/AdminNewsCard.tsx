@@ -11,12 +11,22 @@ interface Props {
 }
 
 export default function AdminNewsCard({ news, onEdit, onDelete }: Props) {
+  // Prefer an existing paragraphs array (from backend), otherwise split the content string into paragraphs.
+  // Split on any blank line (handles '\n\n', '\r\n\r\n', or lines with only whitespace).
+  const rawParagraphs: string[] = (news as any).paragraphs && Array.isArray((news as any).paragraphs)
+    ? (news as any).paragraphs
+    : news.content
+    ? (news.content as string).split(/\r?\n\s*\r?\n/)
+    : [];
+
+  const paragraphs: string[] = rawParagraphs.map((p: string) => p.trim()).filter((p): p is string => Boolean(p));
+
   return (
     <div className={styles.card}>
       {/* Image */}
       <div className={styles.imageWrapper}>
         <Image
-          src={news.image || '/placeholder-news.jpg'}
+          src={news.image?.trim() || '/placeholder-news.jpg'} 
           alt={news.title}
           width={260}
           height={220}
@@ -29,7 +39,17 @@ export default function AdminNewsCard({ news, onEdit, onDelete }: Props) {
         <div className={styles.textContent}>
           <h3>{news.title}</h3>
           <span className={styles.date}>{news.date}</span>
-          <p className={styles.description}>{news.content}</p>
+          {paragraphs.map((para: string, i: number) => (
+            <p key={i} className={styles.description}>
+              {/** Preserve internal single newlines within a paragraph by rendering <br/> where needed */}
+              {para.split(/\r?\n/).map((line: string, idx: number) => (
+                <span key={idx}>
+                  {line}
+                  {idx < para.split(/\r?\n/).length - 1 && <br />}
+                </span>
+              ))}
+            </p>
+          ))}
         </div>
 
         {/* Actions */}

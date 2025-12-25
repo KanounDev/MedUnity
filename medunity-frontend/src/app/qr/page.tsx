@@ -5,7 +5,7 @@ import QRSection from "@/components/QRSection";
 export default function QRPage() {
   return (
     <div>
-      <HeroBanner title="QUESTIONS – RÉPONSES" />
+      <HeroBanner title="QUESTIONS – RESPONSES" />
       <QRSection />
     </div>
   );

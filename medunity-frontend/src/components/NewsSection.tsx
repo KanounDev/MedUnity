@@ -1,92 +1,91 @@
 "use client";
-import HeroBanner from "./HeroBanner";
 import styles from "./NewsSection.module.css";
 import Image from "next/image";
+import { useState, useEffect } from 'react';
+import { News } from '@/types';
+
+const API_URL = "http://localhost:3002"; // Your NestJS backend
 
 export default function NewsSection() {
-return (
-    <>
+  const [newsItems, setNewsItems] = useState<News[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await fetch(`${API_URL}/news`);
+        if (!res.ok) throw new Error("Unable to load news");
+        const data = await res.json();
+        
+        // Handle paragraphs to content mapping
+        const mappedNews = data.map((n: any) => ({
+          ...n,
+          content: n.paragraphs ? n.paragraphs.join('\n\n') : n.content || ''
+        }));
+        
+        setNewsItems(mappedNews);
+      } catch (err) {
+        setError("Error loading news");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className={styles.container}>
+        <p className="text-center py-20 text-gray-600">Loading news...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={styles.container}>
+        <p className="text-center py-20 text-red-600">{error}</p>
+      </section>
+    );
+  }
+
+  return (
     <section className={styles.container}>
-    {/* News 1 */}
-    <div className={styles.newsCard}>
-        <div className={styles.imageWrapper}>
-        <Image
-            src="/doctor.jpeg"
-            alt="Doctor"
-            width={200}
-            height={200}
-            className={styles.image}
-        />
-        </div>
-        <div className={styles.text}>
-        <p>
-            The Institute of Pathology MedUnify is accredited to host and train
-            medical residents.
+      {newsItems.length === 0 ? (
+        <p className="text-center py-16 text-gray-500">
+          No news have been added yet.
         </p>
-        <p>
-            Welcome to Agathe, a resident from the Amiens University Hospital,
-            who is joining our team for 6 months with the desire to deepen her
-            knowledge in Thoracic and Urological Pathology.
-        </p>
-        </div>
-    </div>
-
-    <hr className={styles.divider} />
-
-    {/* News 2 */}
-    <div className={styles.newsCard}>
-        <div className={styles.imageWrapper}>
-        <Image
-            src="/meetup.jpeg"
-            alt="Meet-up event"
-            width={300}
-            height={200}
-            className={styles.image}
-        />
-        </div>
-        <div className={styles.text}>
-        <p>
-            On September 16, 2025, starting at 6 PM, the September Meet-up #1
-            will take place at i-Path. This monthly gathering is an opportunity
-            to discuss innovation, create synergies, and imagine the projects of
-            tomorrow.
-        </p>
-        <p>
-            These Meet-ups are regular events bringing together innovation
-            stakeholders from the region. The meeting will be a chance to
-            introduce each other’s centers of expertise, challenges, and
-            ambitions, to brainstorm collaborative projects, and to find
-            complementary skills and more.
-        </p>
-        </div>
-    </div>
-
-    <hr className={styles.divider} />
-
-    {/* News 3 */}
-    <div className={styles.newsCard}>
-        <div className={styles.imageWrapper}>
-        <Image
-            src="/fair.jpeg"
-            alt="Picardie Fair"
-            width={300}
-            height={250}
-            className={styles.image}
-        />
-        </div>
-        <div className={styles.text}>
-        <p>
-            i-Path est présent pour sa 84ème édition de la foire exposition de
-            Picardie qui se tient à Amiens du 6 au 15 juin 2025!
-        </p>
-        <p>
-            Retrouvons-nous à la Foire dans le village de l’innovation qui met
-            en lumière de acteurs et dispositifs innovants du territoire. Venez
-            nous rendre visite et scannez le QR Code!
-        </p>
-        </div>
-    </div>
+      ) : (
+        newsItems.map((news, index) => {
+          const paragraphs = news.content.split(/\r?\n\s*\r?\n/);
+          return (
+            <div key={news.id}>
+              <div className={styles.newsCard}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={news.image?.trim() || '/placeholder-news.jpg'}
+                    alt={news.title}
+                    width={300}
+                    height={200}
+                    className={styles.image}
+                  />
+                </div>
+                <div className={styles.text}>
+                  <h3>{news.title}</h3>
+                  <span className={styles.date}>{news.date}</span>
+                  {paragraphs.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              </div>
+              {index < newsItems.length - 1 && <hr className={styles.divider} />}
+            </div>
+          );
+        })
+      )}
     </section>
-    </>
-);
+  );
 }

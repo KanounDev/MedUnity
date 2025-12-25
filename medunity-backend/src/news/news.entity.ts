@@ -12,11 +12,11 @@ export class News {
   date: string; // e.g. "Novembre 2025"
 
   @Column('json', { nullable: true })
-  paragraphs?: string[]; // each element is a paragraph
+  paragraphs?: string[] | null; // each element is a paragraph
 
 
-  @Column({ nullable: true })
-  image?: string; // base64 or URL
+  @Column({ type: 'text', nullable: true })
+  image?: string | null; // base64 or URL
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
