@@ -110,16 +110,35 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```bash
     npm install
     ```
-3. **Exécutez les migrations de la base de données**
-   ```bash
-   npm run migration:run
-   ```   
-4.  **Démarrer le serveur**
+3.  **Démarrer le serveur**
     ```bash
     npm run start:dev
     ```
+    
+### 3. Base de données PostgreSQL
+#### Création de la base de données
 
-### 3. Database
+Ouvrir PostgreSQL (psql ou pgAdmin) et créer la base de données :
+
+```sql
+CREATE DATABASE medunity;
+```
+#### Vérifier que la base existe et est accessible
+#### Configuration de l’accès à la base de données
+#### Créer un fichier .env dans medunity-backend :
+```bash
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_NAME=medunity
+```
+#### Assurez-vous que ces valeurs correspondent à votre installation PostgreSQL locale.
+
+#### Exécuter les migrations de la base de données
+```bash
+npm run migration:run
+```
 #### Import CSV into a table
 
 Once your table exists:
