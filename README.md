@@ -130,8 +130,9 @@ CREATE DATABASE medunity;
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_NAME=medunity
+DB_PASSWORD=admin
+DB_DATABASE=medunity
+GEMINI_API_KEY=AIzaSyCSmDvm-FQ98ltlnCEBzXbWobnzB5wB3Ho
 ```
 #### Assurez-vous que ces valeurs correspondent à votre installation PostgreSQL locale.
 
