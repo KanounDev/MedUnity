@@ -123,6 +123,25 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
    Run the migration:
    npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source
    ```
+
+### 3. Database
+#### Import CSV into a table
+
+Once your table exists:
+
+Right-click the table → Import/Export.
+
+In the dialog:
+
+Filename → select your CSV file.
+
+Format → choose CSV.
+
+Check Header if your CSV has column names.
+
+Optional: adjust Delimiter (usually ,).
+
+Click OK → pgAdmin will insert the rows.
 ---
 
 ##  Sécurité
