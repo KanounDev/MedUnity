@@ -89,7 +89,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```
 2.  **Accéder au dossier du projet**
     ```bash
-    cd medunity-frontend
+    cd MedUnity/medunity-frontend
     ```
 3.  **Installation des dépendances**
     ```bash
@@ -104,7 +104,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 1.  **Accéder au dossier backend**
     ```bash
-    cd medunity-backend
+    cd MedUnity/medunity-backend
     ```
 2.  **Installation des dépendances**
     ```bash
