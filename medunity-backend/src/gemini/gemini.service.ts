@@ -44,12 +44,12 @@ export class GeminiService {
       } else {
         // Handle the case where the API response is successful but text is missing (e.g., blocked content)
         console.warn('Gemini API returned an empty text response.');
-        return "Désolé, l'IA n'a pas pu générer de réponse pour cette question. Veuillez reformuler.";
+        return "Sorry, the AI ​​was unable to generate an answer to this question. Please rephrase.";
       }
 
     } catch (error) {
       console.error('Gemini API Error:', error);
-      return "Désolé, une erreur est survenue lors de la récupération de la réponse. Veuillez réessayer plus tard.";
+      return "Sorry, an error occured when trying to retrieve the response. Please try again later.";
     }
   }
 }
