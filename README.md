@@ -136,8 +136,9 @@ DB_PORT=5432
 DB_USERNAME=postgres
 DB_PASSWORD=admin
 DB_DATABASE=medunity
-GEMINI_API_KEY=AIzaSyCSmDvm-FQ98ltlnCEBzXbWobnzB5wB3Ho
+GEMINI_API_KEY=AIzaSyCkdbx5BFIxoYgk4RpUelI6qOzs5wuQ_is
 ```
+Note : if the api key for gemini does not work , try another api key
 #### Assurez-vous que ces valeurs correspondent à votre installation PostgreSQL locale.
 #### Générer les migrations de la base de données
 ```bash
