@@ -139,7 +139,10 @@ DB_DATABASE=medunity
 GEMINI_API_KEY=AIzaSyCSmDvm-FQ98ltlnCEBzXbWobnzB5wB3Ho
 ```
 #### Assurez-vous que ces valeurs correspondent à votre installation PostgreSQL locale.
-
+#### Générer les migrations de la base de données
+```bash
+npm run migration:generate
+```
 #### Exécuter les migrations de la base de données
 ```bash
 npm run migration:run
