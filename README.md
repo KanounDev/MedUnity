@@ -110,17 +110,14 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```bash
     npm install
     ```
-3.  **Démarrer le serveur**
+3. **Exécutez les migrations de la base de données**
+   ```bash
+   npm run migration:run
+   ```   
+4.  **Démarrer le serveur**
     ```bash
     npm run start:dev
     ```
-4. **Création des tableaux dans la base de données**
-   ```bash
-   Run migration generation using ts-node:
-   npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/InitSchema -d src/data-source.ts
-   Run the migration:
-   npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source
-   ```
 
 ### 3. Database
 #### Import CSV into a table
