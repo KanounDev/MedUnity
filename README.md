@@ -91,7 +91,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
     ```bash
     cd MedUnity/medunity-frontend
     ```
-3.  **Ajoutez le fichier env.local sous MedUnity/medunity-frontend pour l'accès au serveur**
+3.  **Ajoutez le fichier .env.local sous MedUnity/medunity-frontend pour l'accès au serveur**
     ```bash
     NEXT_PUBLIC_API_URL=http://localhost:3002
     ```
