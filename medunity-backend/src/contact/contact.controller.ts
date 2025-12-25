@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
+// src/contact/contact.controller.ts
+import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { CreateContactMessageDto } from './dto/create-contact-message.dto';
 import { MessageStatus } from './contact-message.entity';
@@ -22,11 +23,16 @@ export class ContactController {
     return this.contactService.getUnreadCount();
   }
 
-  @Patch(':id/status') // PATCH /contact/:id/status (to mark as READ, ARCHIVED, etc.)
+  @Patch(':id/status') // PATCH /contact/:id/status (to mark as READ, etc.)
   updateStatus(
     @Param('id') id: string,
     @Body('status') status: MessageStatus,
   ) {
     return this.contactService.updateStatus(id, status);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.contactService.remove(id);
   }
 }

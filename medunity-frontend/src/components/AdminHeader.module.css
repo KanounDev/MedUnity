@@ -203,3 +203,53 @@
     stroke: #37678C;
     cursor: pointer;
 }
+
+
+/* src/components/AdminHeader.module.css */
+
+
+/* ... Existing styles ... */
+
+
+/* Add for messages icon */
+
+
+/* Group logo and messages icon on the left */
+
+
+/* Fine-tune the messages icon link */
+
+.messagesIconLink {
+    position: relative;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.messagesIconLink:hover {
+    transform: scale(1.1);
+}
+
+.messagesIcon {
+    width: 40px;
+    height: 40px;
+    stroke: #37678C;
+    cursor: pointer;
+}
+
+
+/* Unread badge */
+
+.unreadBadge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 9999px;
+    min-width: 18px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}

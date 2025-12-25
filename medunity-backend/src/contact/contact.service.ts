@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+// src/contact/contact.service.ts
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContactMessage, MessageStatus } from './contact-message.entity';
@@ -42,5 +43,13 @@ export class ContactService {
   async updateStatus(id: string, status: MessageStatus): Promise<ContactMessage> {
     await this.messagesRepository.update(id, { status });
     return this.messagesRepository.findOneByOrFail({ id });
+  }
+
+  // 5. Logic for Admin to delete a message
+  async remove(id: string): Promise<void> {
+    const result = await this.messagesRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException('Message not found');
+    }
   }
 }

@@ -1,0 +1,60 @@
+/* src/app/Administrator/ContactMessages/ContactMessagesPage.module.css */
+
+.pageContainer {
+    min-height: 100vh;
+}
+
+.main {
+    max-width: 7xl;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1.5rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sortButton {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+    transition: all 0.3s ease;
+}
+
+.sortButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+}
+
+.filterSelect {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background-color: white;
+    font-size: 1rem;
+    min-width: 180px;
+}
+
+.messagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
+}
+
+.noMessages {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+    font-size: 1.1rem;
+}

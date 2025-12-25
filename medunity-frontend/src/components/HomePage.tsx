@@ -2,12 +2,48 @@
 import styles from "./HomePage.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { News } from '@/types';
+
+const API_URL = 'http://localhost:3002';
 
 export default function HomePage() {
   const router = useRouter();
+  const [latestNews, setLatestNews] = useState<News | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLatestNews = async () => {
+      try {
+        const res = await fetch(`${API_URL}/news`);
+        if (res.ok) {
+          const data: News[] = await res.json();
+          if (data.length > 0) {
+            // Sort by createdAt DESC and take the first (most recent)
+            const sorted = data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            setLatestNews(sorted[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestNews();
+  }, []);
+
+  const getSummary = (news: News) => {
+    if (news.paragraphs && news.paragraphs.length > 0) {
+      return news.paragraphs[0]; // Use first paragraph as summary
+    }
+    return news.content.substring(0, 100) + '...'; // Truncate content if no paragraphs
+  };
 
   return (
-    
+
+
     <div className={styles.container}>
       <main className={styles.main}>
         {/* Left Column */}
@@ -58,27 +94,31 @@ export default function HomePage() {
           </div>
         </div>
 
+
         {/* Right Column */}
         <aside>
           <h3 className={styles.titleh}>News</h3>
           <div className={styles.news}>
-            <div className={styles.newsCard}>
-              <Image
-                src="/doctor.jpeg"
-                alt="Resident Doctor"
-                width={280}
-                height={200}
-                className={styles.newsImage}
-              />
-              <p><strong>November 2025: Change of resident doctor</strong></p>
-              <p>
-                Every six months, our institute welcomes a new resident doctor from
-                the University Hospital. Welcome, Agathe...
-              </p>
-              <button onClick={() => router.push("/news")} className={styles.readMore}>
-                Read more
-              </button>
-            </div>
+            {loading ? (
+              <p>Loading latest news...</p>
+            ) : latestNews ? (
+              <div className={styles.newsCard}>
+                <Image
+                  src={latestNews.image || "/doctor.jpeg"}
+                  alt={latestNews.title}
+                  width={280}
+                  height={200}
+                  className={styles.newsImage}
+                />
+                <p><strong>{latestNews.date}: {latestNews.title}</strong></p>
+                <p>{getSummary(latestNews)}</p>
+                <button onClick={() => router.push("/news")} className={styles.readMore}>
+                  Read more
+                </button>
+              </div>
+            ) : (
+              <p>No news available.</p>
+            )}
           </div>
         </aside>
       </main>

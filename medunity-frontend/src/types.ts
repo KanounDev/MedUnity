@@ -1,7 +1,7 @@
 export type Doctor = {
   id: string;
   name: string;
-  title: string; // e.g. "Dr Thomas PETIT"
+  title: string; 
   specialty: string;
   email:string;
   password:string;
@@ -22,18 +22,19 @@ export type Patient = {
 export type News = {
   id: string;
   title: string;
-  date: string;        // e.g. "Novembre 2025"
-  content: string;
-  paragraphs?: string[]; // optional paragraphs (when API provides structured paragraphs)
-  image: string;       // base64 or URL
+  date: string;        // e.g. "December 2025"
+  content: string;    // Optional: used for display (joined from paragraphs)
+  paragraphs?: string[]; // From DB
+  image?: string;      // base64 or URL (nullable in DB)
+  createdAt: string | Date;  // ← ADD THIS
+  updatedAt: string | Date;  // ← ADD THIS (optional but good to have)
 };
 export type Activity = {
 id:string;
 title:string;
 description:string;
-image:string; // base64 or URL
+image:string; 
 };
-// Add to src/types.ts (assuming you have a types file)
 export interface Exam {
   id: string;
   type: string;
@@ -47,3 +48,13 @@ export interface Exam {
   createdAt: string;
   updatedAt: string;
 }
+export type ContactMessage = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  createdAt: Date;
+  status: 'UNREAD' | 'READ' ;
+};

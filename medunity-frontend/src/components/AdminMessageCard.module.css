@@ -1,0 +1,114 @@
+/* src/components/AdminMessageCard.module.css */
+
+
+/* Reuse similar styles from AdminDoctorCard or others for consistency */
+
+.card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.email {
+    font-size: 1rem;
+    color: #4b5563;
+}
+
+.subject {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #14b8a6;
+}
+
+.message {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.status {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.statusUnread {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.statusRead {
+    background-color: #dcfce7;
+    color: #22c55e;
+}
+
+.statusArchived {
+    background-color: #e5e7eb;
+    color: #6b7280;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.iconButton:hover {
+    background: #f3f4f6;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.deleteButton:hover {
+    background: #fee2e2;
+}

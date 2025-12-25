@@ -3,7 +3,6 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeor
 export enum MessageStatus {
   UNREAD = 'UNREAD',
   READ = 'READ',
-  ARCHIVED = 'ARCHIVED',
 }
 
 @Entity()
