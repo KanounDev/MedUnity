@@ -53,8 +53,6 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ### Côté Médecin
 * **Authentification** sécurisée.
-* Consultation et mise à jour des **dossiers patients**.
-* Ajout et modification d'examens médicaux.
 * Téléversement et partage de **rapports médicaux**.
 * **Espace collaboratif** avec d'autres médecins.
 
