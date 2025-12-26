@@ -10,8 +10,8 @@ export class GeminiService {
   private readonly medUnityContext = `
     MedUnity is a web application that connects doctors and patients through a unified digital platform.
     The system includes three roles: Admin, Doctor, and Patient.
-    - **Admin (principal doctor):** Manages the whole platform. Can add, edit, or remove doctors, define medical activities, assign reports to specific doctors, and publish or update news for the medical team.
-    - **Doctor:** Has a personal space where they can view reports assigned to them, complete or edit those reports, and mark them as ready once finalized.
+    - **Admin (principal doctor):** Manages the whole platform. Can add, edit, or remove doctors, define medical activities, assign reports to specific doctors and edit them, and publish or update news for the medical team.
+    - **Doctor:** Has a personal space where they can view reports assigned to them and download them.
     - **Patient:** Has their own dashboard where they can securely access their medical reports and download them in PDF format when they’re ready.
     The Home page presents an overview, displays the list of available activities and recent news, and provides login/registration access for doctors and patients.
   `;
