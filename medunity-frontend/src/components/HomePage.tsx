@@ -57,7 +57,10 @@ export default function HomePage() {
               height={220}
               className={styles.map}
             />
-            <button className={styles.button}>Itinerary</button>
+            <button
+              onClick={() => window.open("https://maps.app.goo.gl/e79xU3jpTMRsUMWY8", "_blank")}
+              className={styles.button}
+            >Itinerary</button>
           </section>
 
           <h3 className={styles.titleh}>Working Hours</h3>
