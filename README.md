@@ -58,6 +58,7 @@ MedUnity combine une **présentation institutionnelle** du cabinet (accueil, ser
 
 ### Côté Administrateur
 * **Gestion** de la liste des docteurs (ajout, suppression, mise à jour).
+* Ajout et modification d'examens médicaux.
 * Gestion des activités médicales.
 * Gestion des actualités publiées sur la plateforme.
 * **Supervision complète** du système.
