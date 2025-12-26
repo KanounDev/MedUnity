@@ -1,19 +1,19 @@
 .navbar {
     position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 90%;
+    top: 15px;
+    inset-inline: 4vw;
+    width: auto;
+    max-width: 90%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: white;
-    padding: 10px 40px;
+    padding: 10px clamp(20px, 3vw, 40px);
     border-radius: 50px;
-    margin-top: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: background 0.3s;
+    z-index: 1000;
 }
 
 .logo {
@@ -23,6 +23,7 @@
     font-weight: bold;
     color: #003366;
     font-size: 1.2rem;
+    flex-shrink: 0;
 }
 
 .logo img {
@@ -37,17 +38,21 @@
 
 .navLinks {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
 }
 
-.link {
+.link,
+.active {
     text-decoration: none;
     color: #2b1c68;
-    margin: 0 10px;
     font-weight: 600;
     transition: color 0.3s, background-color 0.3s;
     padding: 6px 12px;
     border-radius: 15px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .link:hover {
@@ -58,9 +63,33 @@
 .active {
     background-color: #a0f0e0;
     color: #003366;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 15px;
+}
+
+@media (max-width: 1200px) {
+    .navLinks {
+        gap: 6px;
+    }
+    .link,
+    .active {
+        padding: 5px 10px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .logo span {
+        display: none;
+    }
+    .logo img {
+        width: 32px;
+        height: 32px;
+    }
+    .navLinks {
+        gap: 4px;
+    }
+    .link,
+    .active {
+        padding: 4px 8px;
+        font-size: 0.9rem;
+    }
 }

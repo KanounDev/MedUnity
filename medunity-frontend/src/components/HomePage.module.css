@@ -1,30 +1,33 @@
-/* components/HomePage.module.css */
 @font-face {
-  font-family: "Lilita One";
-  src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: "Lilita One";
+    src: url("/fonts/LilitaOne-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
+
 @font-face {
-  font-family: "LindenHill";
-  src: url("/fonts/LindenHill-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: "LindenHill";
+    src: url("/fonts/LindenHill-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
+
 .container {
     font-family: "Poppins", sans-serif;
+    min-height: 100vh;
 }
 
 
-/* Main Grid Layout - unchanged structure */
+/* Main Grid Layout - more flexible and responsive */
 
 .main {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 2rem;
-    padding: 2rem 3rem;
+    grid-template-columns: 1fr minmax(0, 2fr) 1fr;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1rem, 4vw, 3rem);
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -34,12 +37,13 @@
 .sidebar {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
 }
 
 .titleh {
     font-family: "Lilita One", cursive;
-    font-size: 2.5rem;
-    font-weight: 70;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 400;
     color: rgb(24, 0, 113);
     text-align: center;
     margin-bottom: 0.5rem;
@@ -49,11 +53,10 @@
 .card {
     background: white;
     border-radius: 20px;
-    padding: 2rem;
+    padding: clamp(1.5rem, 2.5vw, 2rem);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     height: fit-content;
     transition: all 0.3s ease;
-    margin-bottom: 10%;
 }
 
 .card:hover {
@@ -66,6 +69,7 @@
     margin-bottom: 1rem;
     width: 100%;
     height: auto;
+    object-fit: contain;
 }
 
 .button {
@@ -78,6 +82,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 0.5rem;
+    width: 100%;
 }
 
 .button:hover {
@@ -91,14 +96,14 @@
 .center {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: clamp(2rem, 4vw, 3rem);
     align-items: center;
 }
 
 .banner {
     background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url("/laboratory.jpeg") center/cover no-repeat;
     border-radius: 1rem;
-    padding: 3rem 2.5rem;
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
     width: 100%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(1rem);
@@ -107,14 +112,14 @@
 
 .bannerText h2 {
     font-family: "LindenHill", cursive;
-    font-size: 2.4rem;
+    font-size: clamp(2rem, 4vw, 2.4rem);
     color: rgb(24, 0, 113);
     margin-bottom: 0.5rem;
 }
 
 .bannerText h3 {
     font-family: "LindenHill", cursive;
-    font-size: 1.8rem;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
     color: rgb(24, 0, 113);
     margin: 0;
     margin-top: 5%;
@@ -132,7 +137,7 @@
 .spaces {
     display: flex;
     justify-content: center;
-    gap: 2.5rem;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     flex-wrap: wrap;
 }
 
@@ -140,10 +145,11 @@
     background: white;
     border-radius: 20px;
     padding: 2rem;
-    width: 15rem;
+    width: clamp(12rem, 20vw, 15rem);
     text-align: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .spaceCard:hover {
@@ -174,7 +180,7 @@
 .news {
     background: white;
     border-radius: 20px;
-    padding: 2rem;
+    padding: clamp(1.5rem, 2.5vw, 2rem);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     height: fit-content;
 }
@@ -190,6 +196,7 @@
     transition: transform 0.4s ease;
     width: 100%;
     height: auto;
+    object-fit: cover;
 }
 
 .newsImage:hover {
@@ -219,10 +226,11 @@
 }
 
 
-/* Animated divider — same as Activities & News */
+/* Animated divider */
 
 .divider {
-    width: 300px;
+    width: 80%;
+    max-width: 300px;
     height: 3px;
     background-color: #00bfa5;
     margin: 2rem auto;
@@ -243,14 +251,42 @@
 }
 
 
-/* Responsive */
+/* Responsive improvements */
+
+@media (max-width: 1200px) {
+    .main {
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: clamp(1rem, 2vw, 1.5rem);
+    }
+}
 
 @media (max-width: 1024px) {
     .main {
         grid-template-columns: 1fr;
         padding: 2rem 1.5rem;
+        gap: 3rem;
+    }
+    .sidebar,
+    .center,
+    .news {
+        max-width: 800px;
+        margin: 0 auto;
     }
     .spaces {
-        gap: 2rem;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .titleh {
+        font-size: 1.8rem;
+    }
+    .spaceCard {
+        width: 100%;
+        max-width: 15rem;
+    }
+    .button,
+    .readMore {
+        width: 100%;
     }
 }

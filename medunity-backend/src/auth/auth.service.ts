@@ -17,7 +17,7 @@ export class AuthService {
 
   async validateDoctor(email: string, password: string): Promise<{ allowed: boolean; role: 'doctor' | 'admin'; id?: string }> {
     // Special case: admin bypass
-    if (email.toLowerCase() === 'admin@medunity.com') {
+    if (email.toLowerCase() === 'admin@medunity.com' && password.toLowerCase() === 'admin') {
       return { allowed: true, role: 'admin' };
     }
 
