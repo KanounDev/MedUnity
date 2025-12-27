@@ -8,22 +8,22 @@ import { MessageStatus } from './contact-message.entity';
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
-  @Post() // POST /contact (from homepage form)
+  @Post() 
   create(@Body() createDto: CreateContactMessageDto) {
     return this.contactService.create(createDto);
   }
 
-  @Get() // GET /contact (for admin dashboard list)
+  @Get() 
   findAll() {
     return this.contactService.findAll();
   }
 
-  @Get('unread-count') // GET /contact/unread-count (for admin header badge)
+  @Get('unread-count') 
   getUnreadCount() {
     return this.contactService.getUnreadCount();
   }
 
-  @Patch(':id/status') // PATCH /contact/:id/status (to mark as READ, etc.)
+  @Patch(':id/status') 
   updateStatus(
     @Param('id') id: string,
     @Body('status') status: MessageStatus,

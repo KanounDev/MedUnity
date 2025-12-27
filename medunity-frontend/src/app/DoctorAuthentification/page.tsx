@@ -1,4 +1,3 @@
-// src/app/contact/page.tsx
 import DoctorAuthentication from '@/components/DoctorAuthentification';
 
 export const metadata = {

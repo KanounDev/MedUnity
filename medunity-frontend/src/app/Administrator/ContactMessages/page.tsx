@@ -56,7 +56,6 @@ export default function ContactMessagesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to permanently delete this message?')) return;
 
     try {
       const res = await fetch(`${API_URL}/contact/${id}`, { method: 'DELETE' });

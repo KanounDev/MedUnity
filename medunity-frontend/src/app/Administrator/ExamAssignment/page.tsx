@@ -91,7 +91,6 @@ export default function ExamAssignmentPage() {
                 throw new Error(errorText || 'Failed to save exam');
             }
 
-            // Refresh list
             const res = await fetch(`${API_URL}/exams`);
             if (res.ok) setExams(await res.json());
 
@@ -103,8 +102,6 @@ export default function ExamAssignmentPage() {
     };
 
     const deleteExam = async (id: string) => {
-        if (!confirm('Supprimer cet examen ?')) return;
-
         try {
             await fetch(`${API_URL}/exams/${id}`, { method: 'DELETE' });
             setExams(exams.filter((e) => e.id !== id));
