@@ -21,7 +21,7 @@ export class CreateDoctorDto {
   experience?: string;
 
   @IsString()
-  photo: string; // base64
+  photo: string; 
 
   @IsString()
   @IsOptional()

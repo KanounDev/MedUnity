@@ -1,4 +1,3 @@
-// src/auth/auth.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,15 +15,13 @@ export class AuthService {
   ) { }
 
   async validateDoctor(email: string, password: string): Promise<{ allowed: boolean; role: 'doctor' | 'admin'; id?: string }> {
-    // Special case: admin bypass
     if (email.toLowerCase() === 'admin@medunity.com' && password.toLowerCase() === 'admin') {
       return { allowed: true, role: 'admin' };
     }
 
-    // Regular doctor: check in database
     const doctor = await this.doctorRepository.findOne({
       where: { email: email.toLowerCase() },
-      select: ['id', 'password'], // Only fetch password for comparison
+      select: ['id', 'password'], 
     });
 
     if (!doctor || !doctor.password) {

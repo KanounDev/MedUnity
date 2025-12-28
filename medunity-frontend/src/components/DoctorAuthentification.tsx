@@ -39,7 +39,6 @@ const DoctorAuthentification: React.FC = () => {
         throw new Error(data.message || 'Échec de la connexion');
       }
 
-      // Successful login
       if (data.role === 'admin') {
         sessionStorage.setItem('isAdmin', 'true');
         router.push('/Administrator');

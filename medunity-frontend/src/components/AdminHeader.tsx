@@ -1,4 +1,3 @@
-// src/components/AdminHeader.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -42,9 +41,7 @@ export default function AdminHeader() {
 
   return (
     <header className={styles.header}>
-      {/* Left side: Logo + Messages Icon (grouped together) */}
       <div className={styles.leftSection}>
-        {/* Logo + Brand */}
         <div className={styles.logoSection}>
           <Image
             src="/medunity.png"
@@ -77,7 +74,6 @@ export default function AdminHeader() {
         </Link>
       </div>
 
-      {/* Right side */}
       <div className={styles.rightSection}>
         <div className={styles.pageInfo}>
           <h2 className={styles.pageTitle}>Administrator Space</h2>

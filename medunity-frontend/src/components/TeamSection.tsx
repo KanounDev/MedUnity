@@ -8,7 +8,7 @@ import { Doctor } from "@/types";
 import styles from "./TeamSection.module.css";
 import Image from "next/image";
 
-const API_URL = "http://localhost:3002"; // Your NestJS backend
+const API_URL = "http://localhost:3002"; 
 
 export default function TeamSection() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);

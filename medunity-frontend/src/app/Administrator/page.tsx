@@ -1,4 +1,3 @@
-// app/Administrator/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -15,7 +14,7 @@ import AdminHeader from '@/components/AdminHeader';
 import { Doctor, Patient, Activity, News } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
-const API_URL = 'http://localhost:3002'; // ← Your NestJS backend
+const API_URL = 'http://localhost:3002'; 
 
 export default function AdministratorPage() {
   const router = useRouter();
@@ -35,7 +34,6 @@ export default function AdministratorPage() {
     edit?: any;
   }>({ open: false, type: 'doctor' });
 
-  // === FETCH ALL DATA ON MOUNT ===
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,17 +69,14 @@ export default function AdministratorPage() {
     }
   }, [router]);
 
-  // === MODAL HELPERS ===
   const openAdd = (type: typeof modal.type) => setModal({ open: true, type });
   const openEdit = (type: typeof modal.type, item: any) => {
-    // For news items, ensure we provide a `content` string for the textarea (join paragraphs if present)
     const normalized = type === 'news' && item
       ? { ...item, content: item.paragraphs ? item.paragraphs.join('\n\n') : item.content ?? '' }
       : item;
     setModal({ open: true, type, edit: normalized });
   };
   const closeModal = () => setModal({ open: false, type: 'doctor' });
-  // Generates a random 12-character password
   const generateRandomPassword = (length = 12) => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
     let password = '';
@@ -90,14 +85,10 @@ export default function AdministratorPage() {
     }
     return password;
   };
-
-  // === SAVE DOCTOR (CREATE / UPDATE) ===
   const saveDoctor = async (data: Doctor) => {
     try {
-      // Prepare payload: clone data and conditionally remove password
       const payload: Partial<Doctor> = { ...data };
 
-      // If password is empty or just whitespace, don't send it (especially on edit)
       if (!payload.password || payload.password.trim() === '') {
         delete payload.password;
       }
@@ -118,7 +109,6 @@ export default function AdministratorPage() {
         throw new Error(errorText || 'Failed to save doctor');
       }
 
-      // Refresh the doctors list
       const res = await fetch(`${API_URL}/doctors`);
       if (!res.ok) throw new Error('Failed to reload doctors');
 
@@ -132,7 +122,6 @@ export default function AdministratorPage() {
     }
   };
 
-  // === DELETE DOCTOR ===
   const deleteDoctor = async (id: string) => {
     await fetch(`${API_URL}/doctors/${id}`, { method: 'DELETE' });
     setDoctors(prev => prev.filter(d => d.id !== id));
@@ -152,17 +141,14 @@ export default function AdministratorPage() {
     closeModal();
   };
 
-  // === DELETE ACTIVITY ===
   const deleteActivity = async (id: string) => {
     await fetch(`${API_URL}/activities/${id}`, { method: 'DELETE' });
     setActivities(prev => prev.filter(a => a.id !== id));
   };
-  // === SAVE NEWS ===
   const saveNews = async (data: News) => {
     const method = modal.edit ? 'PATCH' : 'POST';
     const url = modal.edit ? `${API_URL}/news/${data.id}` : `${API_URL}/news`;
 
-    // Ensure we also send a `paragraphs` array derived from the textarea content
     const payload: Partial<News> = {
       ...data,
       paragraphs: data.content ? data.content.split(/\r?\n\s*\r?\n/).map(p => p.trim()).filter(Boolean) : []
@@ -179,18 +165,14 @@ export default function AdministratorPage() {
     closeModal();
   };
 
-  // === DELETE NEWS ===
   const deleteNews = async (id: string) => {
     await fetch(`${API_URL}/news/${id}`, { method: 'DELETE' });
     setNews(prev => prev.filter(n => n.id !== id));
   };
-  // === SAVE PATIENT ===
   const savePatient = async (data: Patient) => {
     try {
-      // Prepare payload: clone data and conditionally remove password
       const payload: Partial<Patient> = { ...data };
 
-      // If password is empty or just whitespace, don't send it (especially on edit)
       if (!payload.password || payload.password.trim() === '') {
         delete payload.password;
       }
@@ -211,7 +193,6 @@ export default function AdministratorPage() {
         throw new Error(errorText || 'Failed to save doctor');
       }
 
-      // Refresh the patients list
       const res = await fetch(`${API_URL}/patients`);
       if (!res.ok) throw new Error('Failed to reload patients');
 
@@ -225,7 +206,6 @@ export default function AdministratorPage() {
     }
   };
 
-  // === DELETE PATIENT ===
   const deletePatient = async (id: string) => {
     await fetch(`${API_URL}/patients/${id}`, { method: 'DELETE' });
     setPatients(prev => prev.filter(p => p.id !== id));
@@ -236,7 +216,6 @@ export default function AdministratorPage() {
 
       <main className="adminPageMain">
 
-        {/* DOCTORS SECTION */}
         <AdminSection title="List of Doctors" onAdd={() => openAdd('doctor')}>
           {doctors.length === 0 ? (
             <p>No doctors are added yet</p>
@@ -282,7 +261,6 @@ export default function AdministratorPage() {
           )}
         </AdminSection>
 
-        {/* Patients Section - NEW */}
         <AdminSection title="List of Patients" onAdd={() => openAdd('patient')}>
           {patients.length === 0 ? (
             <p>No patient is added</p>
@@ -297,11 +275,6 @@ export default function AdministratorPage() {
             ))
           )}
         </AdminSection>
-        {/* ACTIVITIES, NEWS, PATIENTS — same pattern */}
-        {/* ... keep your other sections ... */}
-
-
-        {/* DOCTOR MODAL */}
         <AddEditModal<Doctor>
           isOpen={modal.open && modal.type === 'doctor'}
           onClose={closeModal}
@@ -358,7 +331,6 @@ export default function AdministratorPage() {
                   required
                 />
 
-                {/* Password field */}
                 <div className={styles.passwordWrapper} style={{ position: 'relative' }}>
                   <input
                     className={styles.input}
@@ -371,7 +343,6 @@ export default function AdministratorPage() {
                     value={data.password ?? ''}
                     onChange={(e) => set({ password: e.target.value })}
                     onFocus={() => {
-                      // Only auto-fill on add or if field is empty
                       if (!data.password) {
                         const randomPass = generateRandomPassword();
                         set({ password: randomPass });
@@ -570,7 +541,6 @@ export default function AdministratorPage() {
                     value={data.password ?? ''}
                     onChange={(e) => set({ password: e.target.value })}
                     onFocus={() => {
-                      // Only auto-fill on add or if field is empty
                       if (!data.password) {
                         const randomPass = generateRandomPassword();
                         set({ password: randomPass });

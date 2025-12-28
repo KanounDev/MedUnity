@@ -1,4 +1,3 @@
-// src/doctor/doctor.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,7 +16,6 @@ export class DoctorService {
   async create(createDto: CreateDoctorDto): Promise<Doctor> {
     const doctorData = { ...createDto };
 
-    // Hash password if provided
     if (doctorData.password) {
       doctorData.password = await bcrypt.hash(doctorData.password, 10);
     }
@@ -41,7 +39,6 @@ export class DoctorService {
   async update(id: string, updateDto: UpdateDoctorDto): Promise<Doctor> {
     const updateData = { ...updateDto };
 
-    // Only hash password if a new one is provided
     if (updateData.password) {
       updateData.password = await bcrypt.hash(updateData.password, 10);
     }

@@ -1,6 +1,4 @@
-// src/doctor/doctor.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-// In src/doctor/doctor.entity.ts (add import + property)
 import { OneToMany } from 'typeorm';
 import { Exam } from '../exam/exam.entity';
 
