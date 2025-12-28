@@ -155,13 +155,9 @@ Right-click the table → Import/Export.
 
 In the dialog:
 
-Filename → select your CSV file.
+Filename → select the CSV file from "Database" folder.
 
 Format → choose CSV.
-
-Check Header if your CSV has column names.
-
-Optional: adjust Delimiter (usually ,).
 
 Click OK → pgAdmin will insert the rows.
 ---
